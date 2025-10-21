@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCrypt - Cryptanalysis Tools</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>CyberCrypt</h1>
+        <p>Advanced Cryptanalysis Suite</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#caesar">Caesar</a></li>
+            <li><a href="#affine">Affine</a></li>
+            <li><a href="#vigenere">Vigenere</a></li>
+            <li><a href="#playfair">Playfair</a></li>
+            <li><a href="#hill">Hill</a></li>
+            <li><a href="#keyword">Keyword</a></li>
+            <li><a href="#columnar">Columnar Transposition</a></li>
+            <li><a href="#autokey">Autokey</a></li>
+            <li><a href="#running">Running Key</a></li>
+            <li><a href="#stream">Stream Cipher</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="caesar">
+            <h2>Caesar Cipher Cryptanalysis</h2>
+            <form id="caesar-form">
+                <label for="caesar-input">Ciphertext:</label>
+                <textarea id="caesar-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="caesar-output"></div>
+        </section>
+        <section id="affine">
+            <h2>Affine Cipher Cryptanalysis</h2>
+            <form id="affine-form">
+                <label for="affine-input">Ciphertext:</label>
+                <textarea id="affine-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="affine-output"></div>
+        </section>
+        <section id="vigenere">
+            <h2>Vigenere Cipher Cryptanalysis</h2>
+            <form id="vigenere-form">
+                <label for="vigenere-input">Ciphertext:</label>
+                <textarea id="vigenere-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="vigenere-output"></div>
+        </section>
+        <section id="playfair">
+            <h2>Playfair Cipher Cryptanalysis</h2>
+            <form id="playfair-form">
+                <label for="playfair-input">Ciphertext:</label>
+                <textarea id="playfair-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="playfair-output"></div>
+        </section>
+        <section id="hill">
+            <h2>Hill Cipher Cryptanalysis</h2>
+            <form id="hill-form">
+                <label for="hill-input">Ciphertext:</label>
+                <textarea id="hill-input" placeholder="Enter ciphertext..."></textarea>
+                <label for="hill-keysize">Key Matrix Size (2 or 3):</label>
+                <input type="number" id="hill-keysize" min="2" max="3" value="2">
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="hill-output"></div>
+        </section>
+        <section id="keyword">
+            <h2>Keyword Cipher Cryptanalysis</h2>
+            <form id="keyword-form">
+                <label for="keyword-input">Ciphertext:</label>
+                <textarea id="keyword-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="keyword-output"></div>
+        </section>
+        <section id="columnar">
+            <h2>Columnar Transposition Cryptanalysis</h2>
+            <form id="columnar-form">
+                <label for="columnar-input">Ciphertext:</label>
+                <textarea id="columnar-input" placeholder="Enter ciphertext..."></textarea>
+                <label for="columnar-cols">Number of Columns:</label>
+                <input type="number" id="columnar-cols" min="2" max="10" value="5">
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="columnar-output"></div>
+        </section>
+        <section id="autokey">
+            <h2>Autokey Cipher Cryptanalysis</h2>
+            <form id="autokey-form">
+                <label for="autokey-input">Ciphertext:</label>
+                <textarea id="autokey-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="autokey-output"></div>
+        </section>
+        <section id="running">
+            <h2>Running Key Cipher Cryptanalysis</h2>
+            <form id="running-form">
+                <label for="running-input">Ciphertext:</label>
+                <textarea id="running-input" placeholder="Enter ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="running-output"></div>
+        </section>
+        <section id="stream">
+            <h2>Stream Cipher Cryptanalysis</h2>
+            <form id="stream-form">
+                <label for="stream-input">Ciphertext (hex):</label>
+                <textarea id="stream-input" placeholder="Enter hex ciphertext..."></textarea>
+                <button type="submit">Analyze</button>
+            </form>
+            <div id="stream-output"></div>
+        </section>
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
