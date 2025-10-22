@@ -1,1 +1,1 @@
-live: https://kryptmancer.github.io/crypt0
+live: https://kryptmancer.github.io/Crypt
