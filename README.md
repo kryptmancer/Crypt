@@ -282,13 +282,13 @@ Educational use only. Part of Cryptology coursework.
 
 ## 👥 Authors
 
-- **[Your Name]** - Implementation & Testing
+- **Aryan** - Implementation & Testing
 - **Smaran** - Design & Analysis
 
 ---
 
 **Course:** Cryptology  
-**Institution:** [Your Institution]  
+**Institution:** Northern Kentucky University  
 **Date:** December 2025
 
 ---
