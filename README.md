@@ -2,7 +2,7 @@
 
 **Live Demo:** https://kryptmancer.github.io/Crypt
 
-**Authors:** [Your Name] & Smaran  
+**Authors:** Aryan & Smaran  
 **Subject:** Cryptanalysis of XORed Baudot Messages (Two-Time Pad Attack)
 
 ## 📋 Overview
