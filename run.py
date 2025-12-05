@@ -24,21 +24,24 @@ def print_banner():
 def print_menu():
     """Display the main menu."""
     menu = """
-Available Tools:
-═════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════
+                           AVAILABLE TOOLS
+═══════════════════════════════════════════════════════════════════════
 
-1. 🖥️  Launch CLI Tool          (BaudotSolver.py)
-2. 🎨 Launch GUI Tool          (SolverUI.py)
-3. 🧪 Run Test Suite           (test_suite.py)
-4. 📚 View Examples            (examples.py)
-5. ✓  Verify Encoding          (BletchleyMap.py)
-6. ⚙️  Test XOR Engine         (XOREngine.py)
-7. 📖 Open Documentation       (README.md)
-8. 📊 View Project Summary     (PROJECT_SUMMARY.md)
-9. 🌐 Open Web Interface       (index.html)
-0. ❌ Exit
+  1. 🖥️  Launch CLI Tool          (BaudotSolver.py)
+  2. 🎨 Launch GUI Tool          (SolverUI.py)
+  3. 🧪 Run Test Suite           (test_suite.py)
+  4. 📚 View Examples            (examples.py)
+  5. ✓  Verify Encoding          (BletchleyMap.py)
+  6. ⚙️  Test XOR Engine         (XOREngine.py)
+  7. 📖 Open Documentation       (README.md)
+  8. 📊 View Project Summary     (PROJECT_SUMMARY.md)
+  9. 🌐 Open Web Interface       (index.html)
+  0. ❌ Exit
+  
+  ?. Show Quick Reference
 
-═════════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════════════
     """
     print(menu)
 
@@ -114,7 +117,7 @@ def show_quick_info():
 ═══════════════════════════════════════════════════════════════════════
     """
     print(info)
-    input("\nPress Enter to continue...")
+    input("\nPress Enter to return to menu...")
 
 
 def main():
@@ -122,11 +125,10 @@ def main():
     while True:
         os.system('clear' if os.name == 'posix' else 'cls')
         print_banner()
-        show_quick_info()
         print_menu()
         
         try:
-            choice = input("Enter your choice (0-9): ").strip()
+            choice = input("Enter your choice (0-9, ? for help): ").strip()
             
             if choice == '1':
                 run_tool('BaudotSolver.py', 'CLI Cryptanalysis Tool')
@@ -161,8 +163,12 @@ def main():
                 print("="*70 + "\n")
                 sys.exit(0)
             
+            elif choice == '?':
+                os.system('clear' if os.name == 'posix' else 'cls')
+                show_quick_info()
+            
             else:
-                print("\n✗ Invalid choice. Please enter a number from 0-9.")
+                print("\n✗ Invalid choice. Please enter 0-9 or ? for help.")
                 input("Press Enter to continue...")
         
         except KeyboardInterrupt:
