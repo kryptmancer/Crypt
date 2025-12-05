@@ -338,12 +338,12 @@
             
             <div class="input-row">
                 <div class="input-group">
-                    <label>Ciphertext 1 (hex)</label>
-                    <textarea id="c1" placeholder="Enter hex..."></textarea>
+                    <label>Ciphertext 1 (binary)</label>
+                    <textarea id="c1" placeholder="e.g., 00000 11111 11001 11000 10111 00011"></textarea>
                 </div>
                 <div class="input-group">
-                    <label>Ciphertext 2 (hex)</label>
-                    <textarea id="c2" placeholder="Enter hex..."></textarea>
+                    <label>Ciphertext 2 (binary)</label>
+                    <textarea id="c2" placeholder="e.g., 00000 01011 00100 01001 11111 00011"></textarea>
                 </div>
             </div>
             
@@ -363,10 +363,10 @@
                 <span>Quick:</span>
                 <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
                 <button class="btn btn-small" onclick="useCrib('AND')">AND</button>
+                <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
+                <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
-                <button class="btn btn-small" onclick="useCrib('REPORT')">REPORT</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
-                <button class="btn btn-small" onclick="useCrib('MESSAGE')">MESSAGE</button>
             </div>
             
             <button class="btn" onclick="dragCrib()">Drag Crib</button>
@@ -379,15 +379,15 @@
     </div>
     
     <script>
-        // Baudot encoding (Bletchley Park variant)
+        // Baudot/ITA2 encoding (standard 5-bit)
         const CHAR_TO_BIN = {
-            '/': '00000', 'A': '11000', 'B': '10011', 'C': '01110', 'D': '10010',
-            'E': '10000', 'F': '10110', 'G': '01011', 'H': '00101', 'I': '01100',
-            'J': '11010', 'K': '11110', 'L': '01001', 'M': '00111', 'N': '00110',
-            'O': '00011', 'P': '01101', 'Q': '11101', 'R': '01010', 'S': '10100',
-            'T': '00001', 'U': '11100', 'V': '01111', 'W': '11001', 'X': '10111',
-            'Y': '10101', 'Z': '10001', '3': '01000', '4': '00010', '5': '11011',
-            '8': '10110', '9': '11111', ' ': '00100'
+            '/': '00000', 'E': '10000', 'A': '11000', 'S': '10100', 'I': '01100',
+            'U': '11100', 'D': '10010', 'R': '01010', 'J': '11010', 'N': '00110',
+            'F': '10110', 'C': '01110', 'K': '11110', 'T': '00001', 'Z': '10001',
+            'L': '01001', 'W': '11001', 'H': '00101', 'Y': '10101', 'P': '01101',
+            'Q': '11101', 'O': '00011', 'B': '10011', 'G': '01011', 'M': '00111',
+            'X': '10111', 'V': '01111', ' ': '00100', '3': '01000', '4': '00010',
+            '5': '11011', '8': '10110', '9': '11111'
         };
         
         const BIN_TO_CHAR = Object.fromEntries(
@@ -396,17 +396,13 @@
         
         let xorStream = '';
         
-        function hexToBinary(hex) {
-            hex = hex.replace(/\s/g, '').replace(/0x/gi, '');
-            let binary = '';
-            for (let i = 0; i < hex.length; i++) {
-                binary += parseInt(hex[i], 16).toString(2).padStart(4, '0');
+        // Clean binary input: remove spaces and validate
+        function cleanBinary(input) {
+            const cleaned = input.replace(/\s/g, '');
+            if (!/^[01]+$/.test(cleaned)) {
+                throw new Error('Invalid binary: only 0 and 1 allowed');
             }
-            // Pad to multiple of 5
-            while (binary.length % 5 !== 0) {
-                binary = '0' + binary;
-            }
-            return binary;
+            return cleaned;
         }
         
         function xorBinary(a, b) {
@@ -424,7 +420,9 @@
             let text = '';
             for (let i = 0; i < binary.length; i += 5) {
                 const chunk = binary.substr(i, 5);
-                text += BIN_TO_CHAR[chunk] || '?';
+                if (chunk.length === 5) {
+                    text += BIN_TO_CHAR[chunk] || '?';
+                }
             }
             return text;
         }
@@ -435,6 +433,15 @@
                 binary += CHAR_TO_BIN[char] || '00000';
             }
             return binary;
+        }
+        
+        function formatBinary(binary) {
+            let formatted = '';
+            for (let i = 0; i < binary.length; i += 5) {
+                if (i > 0) formatted += ' ';
+                formatted += binary.substr(i, 5);
+            }
+            return formatted;
         }
         
         function isReadable(text) {
@@ -454,18 +461,28 @@
             }
             
             try {
-                const bin1 = hexToBinary(c1);
-                const bin2 = hexToBinary(c2);
+                const bin1 = cleanBinary(c1);
+                const bin2 = cleanBinary(c2);
+                
+                if (bin1.length !== bin2.length) {
+                    setStatus(`Length mismatch: ${bin1.length} vs ${bin2.length} bits`, false);
+                    return;
+                }
+                
+                if (bin1.length % 5 !== 0) {
+                    setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
+                }
+                
                 xorStream = xorBinary(bin1, bin2);
                 
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
-                display.textContent = decoded;
+                display.innerHTML = `<div style="color:#707070;font-size:0.8em;margin-bottom:8px;">${formatBinary(xorStream)}</div><div>${decoded}</div>`;
                 display.classList.remove('empty');
                 
                 setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
             } catch (e) {
-                setStatus('Invalid hex input', false);
+                setStatus(e.message, false);
             }
         }
         
