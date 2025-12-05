@@ -209,60 +209,92 @@
             background: #0a0a0a;
             border: 1px solid #252525;
             padding: 20px;
-            margin: 25px 0;
+            margin: 10px 0;
             min-height: 50px;
             color: #ffffff;
             font-size: 0.9em;
             word-break: break-all;
         }
         
+        .xor-display .text-line {
+            color: #707070;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .xor-display .binary-line {
+            color: #00ff41;
+            font-size: 1.1em;
+            letter-spacing: 0.05em;
+        }
+        
         .xor-display.empty {
             color: #808080;
         }
         
-        .results-container {
+        .crib-binary {
+            margin-top: 10px;
+            padding: 10px 15px;
             background: #0a0a0a;
             border: 1px solid #252525;
-            max-height: 400px;
-            overflow-y: auto;
+            color: #00ff41;
+            font-size: 1em;
+            letter-spacing: 0.05em;
+            min-height: 20px;
+        }
+        
+        .crib-binary:empty {
+            display: none;
+        }
+        
+        /* XOR Operation Display */
+        .xor-operation {
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            padding: 25px;
             margin-top: 25px;
-        }
-        
-        .result-item {
-            padding: 12px 20px;
-            border-bottom: 1px solid #151515;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9em;
-        }
-        
-        .result-item:last-child {
-            border-bottom: none;
-        }
-        
-        .result-item.readable {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .result-item .pos {
-            color: #909090;
-            min-width: 60px;
-        }
-        
-        .result-item .text {
-            color: #ffffff;
-            flex: 1;
-            margin: 0 20px;
             font-family: 'Courier New', monospace;
         }
         
-        .result-item .status {
-            color: #707070;
-            font-size: 0.8em;
+        .op-row {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
         }
         
-        .result-item.readable .status {
+        .op-label {
+            color: #707070;
+            min-width: 80px;
+            font-size: 0.9em;
+        }
+        
+        .op-binary {
+            color: #00ff41;
+            flex: 1;
+            font-size: 1em;
+            letter-spacing: 0.05em;
+        }
+        
+        .op-text {
             color: #ffffff;
+            min-width: 100px;
+            text-align: right;
+            font-size: 1.1em;
+            letter-spacing: 0.1em;
+        }
+        
+        .op-divider {
+            border-top: 1px solid #00ff41;
+            margin: 10px 0;
+        }
+        
+        .op-row.result .op-binary {
+            color: #ffffff;
+        }
+        
+        .op-row.result .op-text {
+            color: #00ff41;
+            font-size: 1.3em;
         }
         
         .cribs-bar {
@@ -330,7 +362,7 @@
             <h2>The Mathematics</h2>
             <p>When two messages are encrypted with the same key:</p>
             <div class="formula">C₁ ⊕ C₂ = (P₁ ⊕ K) ⊕ (P₂ ⊕ K) = P₁ ⊕ P₂</div>
-            <p style="margin-top: 15px; color: #404040;">Drag known words across the XOR stream to reveal plaintext.</p>
+            <p style="margin-top: 15px;">XOR the known plaintext with the stream to reveal the other message.</p>
         </div>
         
         <div class="tool-container">
@@ -355,24 +387,39 @@
             </div>
             
             <div class="input-group">
-                <label>Crib (known word)</label>
-                <input type="text" id="crib" placeholder="e.g., THE, ATTACK, REPORT..." onkeypress="if(event.key==='Enter')dragCrib()">
+                <label>Known Plaintext (Crib)</label>
+                <input type="text" id="crib" placeholder="e.g., CIPHER, CAESAR, ATTACK..." oninput="updateCribBinary()">
+                <div class="crib-binary" id="cribBinary"></div>
             </div>
             
             <div class="cribs-bar">
                 <span>Quick:</span>
-                <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
-                <button class="btn btn-small" onclick="useCrib('AND')">AND</button>
                 <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
                 <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
+                <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
             </div>
             
-            <button class="btn" onclick="dragCrib()">Drag Crib</button>
-            <button class="btn btn-small" onclick="clearResults()" style="border-color: #252525;">Clear</button>
-            
-            <div class="results-container" id="results"></div>
+            <!-- XOR Operation Display -->
+            <div class="xor-operation" id="xorOperation" style="display: none;">
+                <div class="op-row">
+                    <span class="op-label">P₁ ⊕ P₂</span>
+                    <span class="op-binary" id="opXorStream"></span>
+                    <span class="op-text" id="opXorText"></span>
+                </div>
+                <div class="op-row">
+                    <span class="op-label">⊕ Crib</span>
+                    <span class="op-binary" id="opCribBin"></span>
+                    <span class="op-text" id="opCribText"></span>
+                </div>
+                <div class="op-divider"></div>
+                <div class="op-row result">
+                    <span class="op-label">= P₂</span>
+                    <span class="op-binary" id="opResultBin"></span>
+                    <span class="op-text" id="opResultText"></span>
+                </div>
+            </div>
             
             <div class="status-line" id="status">Ready</div>
         </div>
@@ -477,8 +524,11 @@
                 
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
-                display.innerHTML = `<div style="color:#707070;font-size:0.8em;margin-bottom:8px;">${formatBinary(xorStream)}</div><div>${decoded}</div>`;
+                display.innerHTML = `<div class="text-line">${decoded}</div><div class="binary-line">${formatBinary(xorStream)}</div>`;
                 display.classList.remove('empty');
+                
+                // Update XOR operation if crib exists
+                updateCribBinary();
                 
                 setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
             } catch (e) {
@@ -486,56 +536,43 @@
             }
         }
         
-        function useCrib(crib) {
-            document.getElementById('crib').value = crib;
-            dragCrib();
-        }
-        
-        function dragCrib() {
+        function updateCribBinary() {
             const crib = document.getElementById('crib').value.trim().toUpperCase();
-            
-            if (!xorStream) {
-                setStatus('Compute XOR first', false);
-                return;
-            }
+            const cribBinaryEl = document.getElementById('cribBinary');
+            const xorOp = document.getElementById('xorOperation');
             
             if (!crib) {
-                setStatus('Enter a crib', false);
+                cribBinaryEl.textContent = '';
+                xorOp.style.display = 'none';
                 return;
             }
             
             const cribBin = textToBinary(crib);
-            const results = document.getElementById('results');
-            results.innerHTML = '';
+            cribBinaryEl.textContent = formatBinary(cribBin);
             
-            const maxPos = Math.floor((xorStream.length - cribBin.length) / 5) + 1;
-            let readableCount = 0;
-            
-            for (let pos = 0; pos < maxPos; pos++) {
-                const bitPos = pos * 5;
-                const portion = xorStream.substr(bitPos, cribBin.length);
+            // Show XOR operation if we have the stream
+            if (xorStream && cribBin.length <= xorStream.length) {
+                const portion = xorStream.substr(0, cribBin.length);
                 const resultBin = xorBinary(portion, cribBin);
                 const resultText = binaryToText(resultBin);
-                const readable = isReadable(resultText);
                 
-                if (readable) readableCount++;
+                document.getElementById('opXorStream').textContent = formatBinary(portion);
+                document.getElementById('opXorText').textContent = binaryToText(portion);
+                document.getElementById('opCribBin').textContent = formatBinary(cribBin);
+                document.getElementById('opCribText').textContent = crib;
+                document.getElementById('opResultBin').textContent = formatBinary(resultBin);
+                document.getElementById('opResultText').textContent = resultText;
                 
-                const item = document.createElement('div');
-                item.className = 'result-item' + (readable ? ' readable' : '');
-                item.innerHTML = `
-                    <span class="pos">${pos.toString().padStart(3, '0')}</span>
-                    <span class="text">${resultText}</span>
-                    <span class="status">${readable ? '◉ readable' : '○'}</span>
-                `;
-                results.appendChild(item);
+                xorOp.style.display = 'block';
+                setStatus(`Result: ${resultText}`, true);
+            } else {
+                xorOp.style.display = 'none';
             }
-            
-            setStatus(`Found ${readableCount} readable results from ${maxPos} positions`, readableCount > 0);
         }
         
-        function clearResults() {
-            document.getElementById('results').innerHTML = '';
-            setStatus('Cleared', false);
+        function useCrib(crib) {
+            document.getElementById('crib').value = crib;
+            updateCribBinary();
         }
         
         function setStatus(msg, success) {
