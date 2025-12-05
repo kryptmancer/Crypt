@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypt</title>
-    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.cdnfonts.com/css/digital-7-mono" rel="stylesheet">
     <style>
         @import url('https://fonts.cdnfonts.com/css/digital-7-mono');
@@ -32,7 +31,7 @@
         
         header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             padding: 40px 0;
         }
         
@@ -55,13 +54,7 @@
         }
         
         .section {
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid #1a1a1a;
-        }
-        
-        .section:last-child {
-            border-bottom: none;
+            margin-bottom: 50px;
         }
         
         h2 {
@@ -75,139 +68,212 @@
         
         p {
             line-height: 1.8;
-            color: #707070;
+            color: #606060;
         }
         
         .formula {
             background: #0f0f0f;
-            padding: 20px 30px;
-            margin: 20px 0;
+            padding: 15px 25px;
+            margin: 15px 0;
             border-left: 2px solid #00ff41;
             font-family: 'Courier New', monospace;
             color: #00ff41;
-            font-size: 1.1em;
+            font-size: 1em;
         }
         
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .card {
+        /* Tool Section */
+        .tool-container {
             background: #0f0f0f;
-            padding: 30px;
             border: 1px solid #1a1a1a;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #505050;
+            font-size: 0.8em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            padding: 15px;
+            outline: none;
             transition: border-color 0.3s;
         }
         
-        .card:hover {
+        .input-group input:focus,
+        .input-group textarea:focus {
             border-color: #00ff41;
         }
         
-        .card h3 {
-            color: #ffffff;
+        .input-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .btn {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 12px 30px;
+            font-family: 'Courier New', monospace;
             font-size: 0.85em;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-bottom: 20px;
-            font-weight: normal;
-        }
-        
-        .card ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .card li {
-            padding: 8px 0;
-            color: #505050;
-            font-size: 0.9em;
-        }
-        
-        .card li:before {
-            content: "›";
-            color: #00ff41;
+            cursor: pointer;
+            transition: all 0.3s;
             margin-right: 10px;
+            margin-bottom: 10px;
         }
         
-        .code-block {
-            background: #0f0f0f;
-            padding: 25px;
-            border: 1px solid #1a1a1a;
-            overflow-x: auto;
-            margin-top: 20px;
+        .btn:hover {
+            background: #00ff41;
+            color: #0a0a0a;
         }
         
-        .code-block code {
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.75em;
+            border-color: #303030;
+            color: #505050;
+        }
+        
+        .btn-small:hover {
+            border-color: #00ff41;
+            color: #00ff41;
+            background: transparent;
+        }
+        
+        .xor-display {
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            padding: 20px;
+            margin: 25px 0;
+            min-height: 50px;
             color: #00ff41;
             font-size: 0.9em;
-            line-height: 2;
+            word-break: break-all;
         }
         
-        .steps {
-            counter-reset: step;
+        .xor-display.empty {
+            color: #303030;
         }
         
-        .steps li {
-            list-style: none;
-            padding: 15px 0;
-            padding-left: 40px;
-            position: relative;
-            color: #606060;
-            border-bottom: 1px solid #1a1a1a;
+        .results-container {
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 25px;
         }
         
-        .steps li:last-child {
+        .result-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #151515;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+        
+        .result-item:last-child {
             border-bottom: none;
         }
         
-        .steps li:before {
-            counter-increment: step;
-            content: "0" counter(step);
-            position: absolute;
-            left: 0;
-            color: #00ff41;
-            font-family: 'Digital-7 Mono', 'Courier New', monospace;
-            font-size: 1.1em;
+        .result-item.readable {
+            background: rgba(0, 255, 65, 0.05);
         }
         
-        footer {
-            text-align: center;
-            padding-top: 60px;
+        .result-item .pos {
+            color: #404040;
+            min-width: 60px;
+        }
+        
+        .result-item .text {
+            color: #00ff41;
+            flex: 1;
+            margin: 0 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .result-item .status {
             color: #303030;
             font-size: 0.8em;
+        }
+        
+        .result-item.readable .status {
+            color: #00ff41;
+        }
+        
+        .cribs-bar {
+            margin: 20px 0;
+        }
+        
+        .cribs-bar span {
+            color: #404040;
+            font-size: 0.75em;
+            margin-right: 10px;
+            text-transform: uppercase;
             letter-spacing: 0.1em;
         }
         
-        footer a {
-            color: #00ff41;
-            text-decoration: none;
+        .status-line {
+            color: #303030;
+            font-size: 0.8em;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #1a1a1a;
         }
         
-        .status-bar {
-            display: flex;
-            gap: 30px;
-            justify-content: center;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-        
-        .status-item {
-            font-size: 0.75em;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #404040;
-        }
-        
-        .status-item span {
+        .status-line.success {
             color: #00ff41;
         }
         
         ::selection {
             background: #00ff41;
             color: #000;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #252525;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ff41;
         }
     </style>
 </head>
@@ -218,85 +284,206 @@
             <p class="tagline">Two-Time Pad Cryptanalysis</p>
         </header>
         
-        <div class="status-bar">
-            <div class="status-item"><span>›</span> Tests Passing 8/8</div>
-            <div class="status-item"><span>›</span> Zero Dependencies</div>
-            <div class="status-item"><span>›</span> Production Ready</div>
-        </div>
-        
         <div class="section">
             <h2>The Mathematics</h2>
-            <p>When two messages P₁ and P₂ are encrypted with the same key K:</p>
-            <div class="formula">C₁ = P₁ ⊕ K</div>
-            <div class="formula">C₂ = P₂ ⊕ K</div>
-            <p style="margin-top: 20px;">XORing the ciphertexts cancels out the key:</p>
-            <div class="formula">C₁ ⊕ C₂ = P₁ ⊕ P₂</div>
+            <p>When two messages are encrypted with the same key:</p>
+            <div class="formula">C₁ ⊕ C₂ = (P₁ ⊕ K) ⊕ (P₂ ⊕ K) = P₁ ⊕ P₂</div>
+            <p style="margin-top: 15px; color: #404040;">Drag known words across the XOR stream to reveal plaintext.</p>
         </div>
         
-        <div class="section">
-            <h2>Features</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Core</h3>
-                    <ul>
-                        <li>5-bit Baudot encoding</li>
-                        <li>Automatic crib dragging</li>
-                        <li>Readability detection</li>
-                        <li>XOR stream computation</li>
-                    </ul>
+        <div class="tool-container">
+            <h2>Cryptanalysis Tool</h2>
+            
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Ciphertext 1 (hex)</label>
+                    <textarea id="c1" placeholder="Enter hex..."></textarea>
                 </div>
-                <div class="card">
-                    <h3>Interface</h3>
-                    <ul>
-                        <li>Interactive CLI</li>
-                        <li>Graphical GUI</li>
-                        <li>Quick crib buttons</li>
-                        <li>Real-time feedback</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h3>Quality</h3>
-                    <ul>
-                        <li>Comprehensive tests</li>
-                        <li>XOR verification</li>
-                        <li>Error handling</li>
-                        <li>Input validation</li>
-                    </ul>
+                <div class="input-group">
+                    <label>Ciphertext 2 (hex)</label>
+                    <textarea id="c2" placeholder="Enter hex..."></textarea>
                 </div>
             </div>
-        </div>
-        
-        <div class="section">
-            <h2>Quick Start</h2>
-            <div class="code-block">
-<code>$ python3 BaudotSolver.py    <span style="color:#404040"># CLI tool</span>
-$ python3 SolverUI.py        <span style="color:#404040"># GUI tool</span>
-$ python3 test_suite.py      <span style="color:#404040"># Run tests</span>
-$ python3 examples.py        <span style="color:#404040"># View demos</span></code>
+            
+            <button class="btn" onclick="computeXOR()">Compute XOR</button>
+            
+            <div class="input-group" style="margin-top: 25px;">
+                <label>XOR Stream (P₁ ⊕ P₂)</label>
+                <div class="xor-display empty" id="xorDisplay">Waiting for input...</div>
             </div>
+            
+            <div class="input-group">
+                <label>Crib (known word)</label>
+                <input type="text" id="crib" placeholder="e.g., THE, ATTACK, REPORT..." onkeypress="if(event.key==='Enter')dragCrib()">
+            </div>
+            
+            <div class="cribs-bar">
+                <span>Quick:</span>
+                <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
+                <button class="btn btn-small" onclick="useCrib('AND')">AND</button>
+                <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
+                <button class="btn btn-small" onclick="useCrib('REPORT')">REPORT</button>
+                <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
+                <button class="btn btn-small" onclick="useCrib('MESSAGE')">MESSAGE</button>
+            </div>
+            
+            <button class="btn" onclick="dragCrib()">Drag Crib</button>
+            <button class="btn btn-small" onclick="clearResults()" style="border-color: #252525;">Clear</button>
+            
+            <div class="results-container" id="results"></div>
+            
+            <div class="status-line" id="status">Ready</div>
         </div>
-        
-        <div class="section">
-            <h2>How It Works</h2>
-            <ol class="steps">
-                <li>Enter two hex ciphertexts encrypted with the same key</li>
-                <li>Compute the XOR stream (C₁ ⊕ C₂ = P₁ ⊕ P₂)</li>
-                <li>Try common cribs: THE, ATTACK, REPORT, SECRET</li>
-                <li>Look for readable results in the output</li>
-                <li>Build incrementally using discovered fragments</li>
-            </ol>
-        </div>
-        
-        <div class="section">
-            <h2>Verification</h2>
-            <p>Implements Bletchley Park Baudot encoding:</p>
-            <div class="formula">K (11110) ⊕ 5 (11011) = H (00101) ✓</div>
-        </div>
-        
-        <footer>
-            <p>Crypt v1.0 — <a href="README.md">Documentation</a></p>
-            <p style="margin-top: 10px;">Educational cryptanalysis tool</p>
-        </footer>
     </div>
+    
+    <script>
+        // Baudot encoding (Bletchley Park variant)
+        const CHAR_TO_BIN = {
+            '/': '00000', 'A': '11000', 'B': '10011', 'C': '01110', 'D': '10010',
+            'E': '10000', 'F': '10110', 'G': '01011', 'H': '00101', 'I': '01100',
+            'J': '11010', 'K': '11110', 'L': '01001', 'M': '00111', 'N': '00110',
+            'O': '00011', 'P': '01101', 'Q': '11101', 'R': '01010', 'S': '10100',
+            'T': '00001', 'U': '11100', 'V': '01111', 'W': '11001', 'X': '10111',
+            'Y': '10101', 'Z': '10001', '3': '01000', '4': '00010', '5': '11011',
+            '8': '10110', '9': '11111', ' ': '00100'
+        };
+        
+        const BIN_TO_CHAR = Object.fromEntries(
+            Object.entries(CHAR_TO_BIN).map(([k, v]) => [v, k])
+        );
+        
+        let xorStream = '';
+        
+        function hexToBinary(hex) {
+            hex = hex.replace(/\s/g, '').replace(/0x/gi, '');
+            let binary = '';
+            for (let i = 0; i < hex.length; i++) {
+                binary += parseInt(hex[i], 16).toString(2).padStart(4, '0');
+            }
+            // Pad to multiple of 5
+            while (binary.length % 5 !== 0) {
+                binary = '0' + binary;
+            }
+            return binary;
+        }
+        
+        function xorBinary(a, b) {
+            const maxLen = Math.max(a.length, b.length);
+            a = a.padStart(maxLen, '0');
+            b = b.padStart(maxLen, '0');
+            let result = '';
+            for (let i = 0; i < maxLen; i++) {
+                result += a[i] === b[i] ? '0' : '1';
+            }
+            return result;
+        }
+        
+        function binaryToText(binary) {
+            let text = '';
+            for (let i = 0; i < binary.length; i += 5) {
+                const chunk = binary.substr(i, 5);
+                text += BIN_TO_CHAR[chunk] || '?';
+            }
+            return text;
+        }
+        
+        function textToBinary(text) {
+            let binary = '';
+            for (const char of text.toUpperCase()) {
+                binary += CHAR_TO_BIN[char] || '00000';
+            }
+            return binary;
+        }
+        
+        function isReadable(text) {
+            if (text.length < 2) return false;
+            const letters = (text.match(/[A-Z]/g) || []).length;
+            const common = (text.match(/[ETAOINSHRDLU]/g) || []).length;
+            return letters / text.length >= 0.7 && (letters === 0 || common / letters >= 0.3);
+        }
+        
+        function computeXOR() {
+            const c1 = document.getElementById('c1').value.trim();
+            const c2 = document.getElementById('c2').value.trim();
+            
+            if (!c1 || !c2) {
+                setStatus('Enter both ciphertexts', false);
+                return;
+            }
+            
+            try {
+                const bin1 = hexToBinary(c1);
+                const bin2 = hexToBinary(c2);
+                xorStream = xorBinary(bin1, bin2);
+                
+                const decoded = binaryToText(xorStream);
+                const display = document.getElementById('xorDisplay');
+                display.textContent = decoded;
+                display.classList.remove('empty');
+                
+                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
+            } catch (e) {
+                setStatus('Invalid hex input', false);
+            }
+        }
+        
+        function useCrib(crib) {
+            document.getElementById('crib').value = crib;
+            dragCrib();
+        }
+        
+        function dragCrib() {
+            const crib = document.getElementById('crib').value.trim().toUpperCase();
+            
+            if (!xorStream) {
+                setStatus('Compute XOR first', false);
+                return;
+            }
+            
+            if (!crib) {
+                setStatus('Enter a crib', false);
+                return;
+            }
+            
+            const cribBin = textToBinary(crib);
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+            
+            const maxPos = Math.floor((xorStream.length - cribBin.length) / 5) + 1;
+            let readableCount = 0;
+            
+            for (let pos = 0; pos < maxPos; pos++) {
+                const bitPos = pos * 5;
+                const portion = xorStream.substr(bitPos, cribBin.length);
+                const resultBin = xorBinary(portion, cribBin);
+                const resultText = binaryToText(resultBin);
+                const readable = isReadable(resultText);
+                
+                if (readable) readableCount++;
+                
+                const item = document.createElement('div');
+                item.className = 'result-item' + (readable ? ' readable' : '');
+                item.innerHTML = `
+                    <span class="pos">${pos.toString().padStart(3, '0')}</span>
+                    <span class="text">${resultText}</span>
+                    <span class="status">${readable ? '◉ readable' : '○'}</span>
+                `;
+                results.appendChild(item);
+            }
+            
+            setStatus(`Found ${readableCount} readable results from ${maxPos} positions`, readableCount > 0);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            setStatus('Cleared', false);
+        }
+        
+        function setStatus(msg, success) {
+            const status = document.getElementById('status');
+            status.textContent = msg;
+            status.className = 'status-line' + (success ? ' success' : '');
+        }
+    </script>
 </body>
 </html>
