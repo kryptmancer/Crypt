@@ -724,8 +724,9 @@
                 const column = document.createElement('div');
                 column.className = 'matrix-column';
                 column.style.left = (i * 20) + 'px';
-                column.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                column.style.animationDelay = (Math.random() * 10) + 's';
+                // Slower fall: increase duration and spread out delays
+                column.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                column.style.animationDelay = (Math.random() * 20) + 's';
                 
                 // Generate random binary string
                 let binary = '';
