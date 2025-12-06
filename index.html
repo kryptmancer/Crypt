@@ -423,6 +423,11 @@
                     <span class="op-binary" id="opCribBin"></span>
                     <span class="op-text" id="opCribText"></span>
                 </div>
+                <div class="op-row" style="opacity: 0.7;">
+                    <span class="op-label">Key (K)</span>
+                    <span class="op-binary" id="opKeyBin"></span>
+                    <span class="op-text" style="color: #ff0055;" id="opKeyText"></span>
+                </div>
                 <div class="op-divider"></div>
                 <div class="op-row result">
                     <span class="op-label">= P₂</span>
@@ -696,6 +701,29 @@
                 document.getElementById('opCribText').textContent = crib;
                 document.getElementById('opResultBin').textContent = formatBinary(resultBin);
                 document.getElementById('opResultText').textContent = resultText;
+
+                // NEW: Recover Key for this segment if possible: K = C1_segment XOR P1_segment
+                let keyBin = '';
+                let keyText = '';
+                try {
+                    const c1Raw = document.getElementById('c1').value || '';
+                    const c1Full = cleanBinary(c1Raw);
+                    if ((bitOffset + cribBin.length) <= c1Full.length) {
+                        const c1Segment = c1Full.substr(bitOffset, cribBin.length);
+                        keyBin = xorBinary(c1Segment, cribBin);
+                        keyText = binaryToText(keyBin);
+                    } else {
+                        // not enough bits in C1 for this segment
+                        keyBin = ''.padStart(cribBin.length, '0');
+                        keyText = '';
+                    }
+                } catch (e) {
+                    keyBin = ''.padStart(cribBin.length, '0');
+                    keyText = '';
+                }
+
+                document.getElementById('opKeyBin').textContent = formatBinary(keyBin);
+                document.getElementById('opKeyText').textContent = keyText;
 
                 xorOp.style.display = 'block';
                 setStatus(`Result: ${resultText}`, true);
