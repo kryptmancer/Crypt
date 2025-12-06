@@ -400,15 +400,15 @@
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
             </div>
-
-            <div class="input-group" style="margin-top: 20px;">
-                <label>Crib Position (Drag): <span id="posDisplay">0</span></label>
-                <input type="range" id="dragSlider" min="0" max="0" value="0" style="width: 100%; accent-color: #00ff41;" oninput="updateDragPosition(this.value)">
-            </div>
-
+            
             <div id="autoSolver" style="margin-top: 20px; border: 1px solid #252525; padding: 15px; display: none;">
                 <h3 style="color: #00ff41; font-size: 0.9em; margin-bottom: 10px;">SUGGESTED POSITIONS (LOGIC ENGINE)</h3>
                 <div id="suggestions" style="font-size: 0.8em; color: #fff;"></div>
+            </div>
+
+            <div class="input-group" style="margin-top: 20px;">
+                <label>Crib Start Position: <span id="posDisplay">0</span></label>
+                <input type="range" id="dragSlider" min="0" max="0" value="0" style="width: 100%; accent-color: #00ff41;" oninput="updateDragPosition(this.value)">
             </div>
             
             <!-- XOR Operation Display -->
@@ -648,7 +648,9 @@
             const crib = document.getElementById('crib').value.trim().toUpperCase();
             const cribBinaryEl = document.getElementById('cribBinary');
             const xorOp = document.getElementById('xorOperation');
+            const slider = document.getElementById('dragSlider');
 
+            // 1. Reset if empty
             if (!crib) {
                 cribBinaryEl.textContent = '';
                 xorOp.style.display = 'none';
@@ -659,14 +661,30 @@
             const cribBin = textToBinary(crib);
             cribBinaryEl.textContent = formatBinary(cribBin);
 
-            // Run the auto-solver whenever crib changes
+            // 2. [LOGIC FIX] Update Slider Max Range dynamically
+            // You cannot drag a 5-char crib to the very last index.
+            // Formula: MaxStart = (TotalBits - CribBits) / 5
+            if (xorStream) {
+                const maxIndex = Math.floor((xorStream.length - cribBin.length) / 5);
+                
+                // Update the slider's limit
+                slider.max = Math.max(0, maxIndex);
+                
+                // If the slider was previously at pos 20, and new max is 15, snap it back.
+                if (parseInt(slider.value) > maxIndex) {
+                    slider.value = maxIndex;
+                    document.getElementById('posDisplay').innerText = maxIndex;
+                }
+            }
+
+            // 3. Run Auto-Solver
             try { findBestPositions(); } catch (e) { /* ignore */ }
 
-            // Use current slider position instead of 0
-            const currentPos = parseInt(document.getElementById('dragSlider').value) || 0;
+            // 4. Perform the XOR at current position
+            const currentPos = parseInt(slider.value) || 0;
             const bitOffset = currentPos * 5;
 
-            // Show XOR operation if we have the stream and it fits
+            // Bounds check before slicing
             if (xorStream && (bitOffset + cribBin.length) <= xorStream.length) {
                 const portion = xorStream.substr(bitOffset, cribBin.length);
                 const resultBin = xorBinary(portion, cribBin);
