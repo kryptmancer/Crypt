@@ -700,6 +700,26 @@
                 <div class="decrypted-line" id="decryptedLine"></div>
             </div>
             
+            <!-- Persistent recovered buffers -->
+            <div class="decrypted-view" id="recoveredView" style="display: none;">
+                <div style="font-size:0.8em;color:#707070;margin-bottom:8px;">Recovered plaintext buffers (accumulated from accepted matches)</div>
+                <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
+                    <div style="flex:1">
+                        <div style="font-size:0.75em;color:#707070;margin-bottom:6px;">P₁ (accepted)</div>
+                        <div class="decrypted-line" id="recoveredP1"></div>
+                    </div>
+                    <div style="flex:1">
+                        <div style="font-size:0.75em;color:#707070;margin-bottom:6px;">P₂ (accepted)</div>
+                        <div class="decrypted-line" id="recoveredP2"></div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:12px;align-items:center;">
+                    <button class="btn btn-small" onclick="applyRecovery('p2')">Accept current → P₂</button>
+                    <button class="btn btn-small" onclick="applyRecovery('p1')">Accept current → P₁</button>
+                    <button class="btn btn-small" onclick="clearRecovered()" style="border-color:#252525;">Clear Recovered</button>
+                </div>
+            </div>
+            
             <!-- All Positions Results -->
             <div class="results-section" id="resultsSection" style="display: none;">
                 <div class="results-header">
@@ -748,6 +768,8 @@
         let currentPosition = 0;
         let allResults = [];
         let filterMode = 'all';
+        let recoveredP1 = [];
+        let recoveredP2 = [];
         
         function cleanBinary(input) {
             const cleaned = input.replace(/\s/g, '');
@@ -838,6 +860,11 @@
                 xorStream = xorBinary(bin1, bin2);
                 bin1_global = bin1;
                 bin2_global = bin2;
+
+                // initialize recovered buffers
+                const totalChars = Math.floor(xorStream.length / 5);
+                recoveredP1 = new Array(totalChars).fill(null);
+                recoveredP2 = new Array(totalChars).fill(null);
                 
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
@@ -1022,6 +1049,9 @@
                 `;
                 table.appendChild(row);
             });
+            // show recovered view if there is any data
+            const hasRecovered = (recoveredP1 && recoveredP1.some(Boolean)) || (recoveredP2 && recoveredP2.some(Boolean));
+            document.getElementById('recoveredView').style.display = hasRecovered ? 'block' : 'none';
         }
         
         function selectPosition(pos) {
@@ -1039,6 +1069,59 @@
         function useCrib(crib) {
             document.getElementById('crib').value = crib;
             updateCribBinary();
+        }
+
+        // Accept current result at selected position into recovered buffers
+        function applyRecovery(target) {
+            // target = 'p1' or 'p2'
+            if (!allResults[currentPosition]) return;
+            const r = allResults[currentPosition];
+            const resultText = r.p2Result || '';
+            const len = resultText.length;
+
+            if (target === 'p2') {
+                for (let i = 0; i < len; i++) {
+                    recoveredP2[currentPosition + i] = resultText[i] || recoveredP2[currentPosition + i];
+                }
+            } else {
+                for (let i = 0; i < len; i++) {
+                    recoveredP1[currentPosition + i] = resultText[i] || recoveredP1[currentPosition + i];
+                }
+            }
+            renderRecoveredBuffers();
+            setStatus(`Accepted ${len} chars into ${target.toUpperCase()}`, true);
+        }
+
+        function renderRecoveredBuffers() {
+            const total = Math.floor(xorStream.length / 5) || 0;
+            const p1el = document.getElementById('recoveredP1');
+            const p2el = document.getElementById('recoveredP2');
+            if (total === 0) {
+                p1el.textContent = '';
+                p2el.textContent = '';
+                document.getElementById('recoveredView').style.display = 'none';
+                return;
+            }
+
+            let html1 = '';
+            let html2 = '';
+            for (let i = 0; i < total; i++) {
+                const c1 = recoveredP1[i] || '·';
+                const c2 = recoveredP2[i] || '·';
+                html1 += (recoveredP1[i]) ? `<span class="highlight-match">${c1}</span>` : c1;
+                html2 += (recoveredP2[i]) ? `<span class="highlight-match">${c2}</span>` : c2;
+                if ((i + 1) % 10 === 0) { html1 += ' '; html2 += ' '; }
+            }
+            p1el.innerHTML = html1;
+            p2el.innerHTML = html2;
+            document.getElementById('recoveredView').style.display = 'block';
+        }
+
+        function clearRecovered() {
+            recoveredP1 = recoveredP1.map(() => null);
+            recoveredP2 = recoveredP2.map(() => null);
+            renderRecoveredBuffers();
+            setStatus('Recovered buffers cleared', false);
         }
         
         function setStatus(msg, success) {
