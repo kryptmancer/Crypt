@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypt</title>
     <link href="https://fonts.cdnfonts.com/css/matrixtype" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.cdnfonts.com/css/matrixtype');
         
@@ -16,8 +15,8 @@
         }
         
         body {
-            font-family: 'Roboto Mono', 'Courier New', monospace;
-            background: #0f1113;
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
             color: #c0c0c0;
             min-height: 100vh;
             padding: 40px 20px;
@@ -25,7 +24,7 @@
             position: relative;
         }
         
-        /* Matrix Rain Background (subtle, low-opacity) */
+        /* Matrix Rain Background */
         .matrix-bg {
             position: fixed;
             top: 0;
@@ -35,21 +34,17 @@
             pointer-events: none;
             overflow: hidden;
             z-index: 0;
-            display: block;
-            opacity: 0.06;
         }
         
         .matrix-column {
             position: absolute;
             top: -100%;
-            font-family: 'Roboto Mono', 'Courier New', monospace;
-            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
             color: #00ff41;
-            opacity: 0.09;
+            opacity: 0.15;
             animation: matrix-fall linear infinite;
-            text-shadow: 0 0 4px rgba(0,255,65,0.06);
-            line-height: 1.1;
-            letter-spacing: 0.06em;
+            text-shadow: 0 0 5px #00ff41;
         }
         
         @keyframes matrix-fall {
@@ -62,7 +57,7 @@
         }
         
         .container {
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 40px;
             position: relative;
@@ -142,24 +137,22 @@
             margin-bottom: 10px;
         }
         
-        /* Clean input style */
         .input-group input,
         .input-group textarea {
             width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #222427;
+            background: #0a0a0a;
+            border: 1px solid #252525;
             color: #ffffff;
-            font-family: 'Roboto Mono', monospace;
+            font-family: 'Courier New', monospace;
             font-size: 0.95em;
-            padding: 12px 6px;
+            padding: 15px;
             outline: none;
-            transition: border-color 0.15s;
+            transition: border-color 0.3s;
         }
-
+        
         .input-group input:focus,
         .input-group textarea:focus {
-            border-bottom: 1px solid #00ff41;
+            border-color: #00ff41;
         }
         
         .input-group textarea {
@@ -173,15 +166,10 @@
             gap: 20px;
         }
         
-        @media (max-width: 800px) {
-            .input-row { grid-template-columns: 1fr; }
-            .container { padding: 20px; }
-            .header { text-align: left; }
-        }
-
-        @media (max-width: 420px) {
-            .container { padding: 16px; }
-            h1 { font-size: 3em; letter-spacing: 0.15em; }
+        @media (max-width: 600px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
         }
         
         .btn {
@@ -218,27 +206,26 @@
         }
         
         .xor-display {
-            background: transparent;
-            border: none;
-            padding: 6px 0 18px 0;
-            margin: 8px 0;
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            padding: 20px;
+            margin: 10px 0;
             min-height: 50px;
             color: #ffffff;
-            font-size: 0.95em;
+            font-size: 0.9em;
             word-break: break-all;
         }
         
         .xor-display .text-line {
-            color: #d7d7d7;
-            font-size: 0.95em;
+            color: #707070;
+            font-size: 0.85em;
             margin-bottom: 10px;
-            letter-spacing: 0.35em;
         }
-
+        
         .xor-display .binary-line {
             color: #00ff41;
-            font-size: 1.02em;
-            letter-spacing: 0.06em;
+            font-size: 1.1em;
+            letter-spacing: 0.05em;
         }
         
         .xor-display.empty {
@@ -247,10 +234,12 @@
         
         .crib-binary {
             margin-top: 10px;
-            padding: 6px 0 0 0;
+            padding: 10px 15px;
+            background: #0a0a0a;
+            border: 1px solid #252525;
             color: #00ff41;
-            font-size: 0.95em;
-            letter-spacing: 0.06em;
+            font-size: 1em;
+            letter-spacing: 0.05em;
             min-height: 20px;
         }
         
@@ -271,38 +260,27 @@
             display: flex;
             align-items: center;
             padding: 8px 0;
-            gap: 12px;
-            flex-wrap: wrap;
         }
         
         .op-label {
             color: #707070;
-            min-width: 70px;
-            flex: 0 0 70px;
+            min-width: 80px;
             font-size: 0.9em;
         }
-
+        
         .op-binary {
             color: #00ff41;
-            flex: 1 1 auto;
+            flex: 1;
             font-size: 1em;
             letter-spacing: 0.05em;
-            word-break: break-word;
-            overflow-wrap: anywhere;
         }
-
+        
         .op-text {
             color: #ffffff;
-            min-width: 80px;
-            flex: 0 0 100px;
+            min-width: 100px;
             text-align: right;
-            font-size: 1.05em;
+            font-size: 1.1em;
             letter-spacing: 0.1em;
-        }
-
-        @media (max-width: 420px) {
-            .op-label { min-width: 60px; flex: 0 0 60px; }
-            .op-text { min-width: 56px; flex: 0 0 64px; font-size: 0.95em; }
         }
         
         .op-divider {
@@ -412,20 +390,6 @@
                 <label>Known Plaintext (Crib)</label>
                 <input type="text" id="crib" placeholder="e.g., CIPHER, CAESAR, ATTACK..." oninput="updateCribBinary()">
                 <div class="crib-binary" id="cribBinary"></div>
-
-                <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
-                    <div class="drag-controls">
-                        <button class="btn btn-small" onclick="moveCrib(-1)">← Shift Left</button>
-                        <span id="cribPosition">Position: 0</span>
-                        <button class="btn btn-small" onclick="moveCrib(1)">Shift Right →</button>
-                    </div>
-                    <input id="cribSlider" type="range" min="0" value="0" style="flex:1" oninput="setCribPosition(this.value)">
-                </div>
-
-                <div style="margin-top:8px; display:flex; gap:12px; align-items:center;">
-                    <label style="font-size:0.8em; color:#909090;">Prefer Figures:</label>
-                    <input type="checkbox" id="figuresToggle" onchange="updateCribVisuals()">
-                </div>
             </div>
             
             <div class="cribs-bar">
@@ -435,6 +399,16 @@
                 <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
+            </div>
+
+            <div class="input-group" style="margin-top: 20px;">
+                <label>Crib Position (Drag): <span id="posDisplay">0</span></label>
+                <input type="range" id="dragSlider" min="0" max="0" value="0" style="width: 100%; accent-color: #00ff41;" oninput="updateDragPosition(this.value)">
+            </div>
+
+            <div id="autoSolver" style="margin-top: 20px; border: 1px solid #252525; padding: 15px; display: none;">
+                <h3 style="color: #00ff41; font-size: 0.9em; margin-bottom: 10px;">SUGGESTED POSITIONS (LOGIC ENGINE)</h3>
+                <div id="suggestions" style="font-size: 0.8em; color: #fff;"></div>
             </div>
             
             <!-- XOR Operation Display -->
@@ -472,17 +446,13 @@
             'X': '10111', 'V': '01111', ' ': '00100', '3': '01000', '4': '00010',
             '5': '11011', '8': '10110', '9': '11111'
         };
-
-        // Build a reverse map which preserves collisions as arrays
-        const BIN_TO_CHARS = {};
-        for (const [ch, bin] of Object.entries(CHAR_TO_BIN)) {
-            if (!BIN_TO_CHARS[bin]) BIN_TO_CHARS[bin] = [];
-            BIN_TO_CHARS[bin].push(ch);
-        }
-
+        
+        const BIN_TO_CHAR = Object.fromEntries(
+            Object.entries(CHAR_TO_BIN).map(([k, v]) => [v, k])
+        );
+        
         let xorStream = '';
-        let currentPosition = 0; // in characters (5-bit blocks)
-
+        
         // Clean binary input: remove spaces and validate
         function cleanBinary(input) {
             const cleaned = input.replace(/\s/g, '');
@@ -491,45 +461,37 @@
             }
             return cleaned;
         }
-
+        
         function xorBinary(a, b) {
             const maxLen = Math.max(a.length, b.length);
             a = a.padStart(maxLen, '0');
             b = b.padStart(maxLen, '0');
             let result = '';
-            for (let i = 0; i < maxLen; i++) result += a[i] === b[i] ? '0' : '1';
+            for (let i = 0; i < maxLen; i++) {
+                result += a[i] === b[i] ? '0' : '1';
+            }
             return result;
         }
-
-        // Convert a single 5-bit chunk to a character, honoring Figures preference
-        function binToChar(bin) {
-            const arr = BIN_TO_CHARS[bin] || ['?'];
-            if (arr.length === 1) return arr[0];
-            const preferFigures = !!document.getElementById('figuresToggle')?.checked;
-            if (preferFigures) {
-                for (const c of arr) if (/\d|[^A-Z ]/.test(c)) return c;
-                return arr[0];
-            } else {
-                for (const c of arr) if (/[A-Z ]/.test(c)) return c;
-                return arr[0];
-            }
-        }
-
+        
         function binaryToText(binary) {
             let text = '';
             for (let i = 0; i < binary.length; i += 5) {
                 const chunk = binary.substr(i, 5);
-                if (chunk.length === 5) text += binToChar(chunk);
+                if (chunk.length === 5) {
+                    text += BIN_TO_CHAR[chunk] || '?';
+                }
             }
             return text;
         }
-
+        
         function textToBinary(text) {
             let binary = '';
-            for (const char of text.toUpperCase()) binary += CHAR_TO_BIN[char] || '00000';
+            for (const char of text.toUpperCase()) {
+                binary += CHAR_TO_BIN[char] || '00000';
+            }
             return binary;
         }
-
+        
         function formatBinary(binary) {
             let formatted = '';
             for (let i = 0; i < binary.length; i += 5) {
@@ -538,137 +500,180 @@
             }
             return formatted;
         }
-
+        
         function isReadable(text) {
             if (text.length < 2) return false;
             const letters = (text.match(/[A-Z]/g) || []).length;
             const common = (text.match(/[ETAOINSHRDLU]/g) || []).length;
-            return letters / text.length >= 0.6 && (letters === 0 || common / letters >= 0.25);
+            return letters / text.length >= 0.7 && (letters === 0 || common / letters >= 0.3);
         }
 
+        // A simple English frequency scorer
+        function scoreEnglish(text) {
+            const common = "ETAOINSHRDLU"; // Most common letters
+            let score = 0;
+            
+            // Penalty for non-printable/garbage chars
+            const badChars = text.match(/[^A-Z\s]/g);
+            if (badChars) score -= (badChars.length * 20);
+
+            // Bonus for common letters
+            for (let char of text) {
+                if (common.includes(char)) score += 5;
+                if (char === ' ') score += 10; // Spaces are very good signs
+            }
+            
+            // Bonus for common bigrams (THE, AN, IN)
+            if (text.includes("TH")) score += 20;
+            if (text.includes("HE")) score += 15;
+            if (text.includes("AN")) score += 15;
+            
+            return score;
+        }
+
+        // AUTOMATIC SOLVER
+        function findBestPositions() {
+            const crib = document.getElementById('crib').value.trim().toUpperCase();
+            if (!crib || !xorStream) return;
+
+            const cribBin = textToBinary(crib);
+            const maxLen = xorStream.length;
+            const suggestions = [];
+
+            // Drag the crib across every position (in 5-bit steps)
+            const maxPositions = Math.max(0, Math.floor((maxLen - cribBin.length) / 5));
+            for (let i = 0; i <= maxPositions; i++) {
+                const startBit = i * 5;
+                const subStream = xorStream.substr(startBit, cribBin.length);
+                
+                // Calculate the result (Plaintext 2)
+                const resultBin = xorBinary(subStream, cribBin);
+                const resultText = binaryToText(resultBin);
+                
+                // Score it
+                const score = scoreEnglish(resultText);
+                
+                suggestions.push({ pos: i, result: resultText, score: score });
+            }
+
+            // Sort by best score
+            suggestions.sort((a, b) => b.score - a.score);
+
+            // Display top 3
+            const container = document.getElementById('autoSolver');
+            const content = document.getElementById('suggestions');
+            
+            container.style.display = 'block';
+            content.innerHTML = suggestions.slice(0, 3).map(s => 
+                `<div style="margin-bottom: 5px; cursor: pointer;" onclick="setPos(${s.pos})">
+                    <span style="color: #00ff41;">[Pos ${s.pos}]</span> 
+                    <span style="color: #707070;">Result:</span> "${s.result}" 
+                    <span style="color: #555;">(Score: ${s.score})</span>
+                 </div>`
+            ).join('');
+        }
+
+        function updateDragPosition(val) {
+            document.getElementById('posDisplay').innerText = val;
+            updateCribBinary();
+        }
+
+        function setPos(val) {
+            const slider = document.getElementById('dragSlider');
+            if (!slider) return;
+            slider.value = val;
+            updateDragPosition(val);
+        }
+        
         function computeXOR() {
             const c1 = document.getElementById('c1').value.trim();
             const c2 = document.getElementById('c2').value.trim();
-
+            
             if (!c1 || !c2) {
                 setStatus('Enter both ciphertexts', false);
                 return;
             }
-
+            
             try {
                 const bin1 = cleanBinary(c1);
                 const bin2 = cleanBinary(c2);
-
+                
                 if (bin1.length !== bin2.length) {
                     setStatus(`Length mismatch: ${bin1.length} vs ${bin2.length} bits`, false);
                     return;
                 }
-
-                if (bin1.length % 5 !== 0) setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
-
+                
+                if (bin1.length % 5 !== 0) {
+                    setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
+                }
+                
                 xorStream = xorBinary(bin1, bin2);
-
+                
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
                 display.innerHTML = `<div class="text-line">${decoded}</div><div class="binary-line">${formatBinary(xorStream)}</div>`;
                 display.classList.remove('empty');
+                
+                // [NEW] Update slider bounds
+                const drag = document.getElementById('dragSlider');
+                if (drag) {
+                    const maxPos = Math.floor(xorStream.length / 5);
+                    drag.max = Math.max(0, maxPos);
+                    if (!drag.value) drag.value = 0;
+                    document.getElementById('posDisplay').innerText = drag.value;
+                }
 
-                // Update slider max and visuals
-                updateSliderMax();
-                updateCribVisuals();
-
+                // Update XOR operation if crib exists
+                updateCribBinary();
+                
                 setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
             } catch (e) {
                 setStatus(e.message, false);
             }
         }
-
-        function updateSliderMax() {
-            const slider = document.getElementById('cribSlider');
-            if (!slider) return;
-            const crib = document.getElementById('crib').value.trim().toUpperCase();
-            const cribBinLen = (crib ? textToBinary(crib).length : 0);
-            const totalChars = Math.floor(xorStream.length / 5);
-            const cribChars = Math.floor(cribBinLen / 5);
-            const maxPos = Math.max(0, totalChars - Math.max(1, cribChars));
-            slider.max = maxPos;
-            if (currentPosition > maxPos) currentPosition = maxPos;
-            slider.value = currentPosition;
-            document.getElementById('cribPosition').textContent = `Position: ${currentPosition}`;
-        }
-
-        function moveCrib(offset) {
-            currentPosition = Math.max(0, currentPosition + offset);
-            updateSliderMax();
-            document.getElementById('cribSlider').value = currentPosition;
-            updateCribVisuals();
-        }
-
-        function setCribPosition(v) {
-            currentPosition = Number(v);
-            document.getElementById('cribPosition').textContent = `Position: ${currentPosition}`;
-            updateCribVisuals();
-        }
-
-        function updateCribVisuals() {
-            const cribText = document.getElementById('crib').value.trim().toUpperCase();
-            const cribBinaryEl = document.getElementById('cribBinary');
-            const xorOp = document.getElementById('xorOperation');
-            if (!cribText) {
-                cribBinaryEl.textContent = '';
-                xorOp.style.display = 'none';
-                return;
-            }
-            if (!xorStream) {
-                cribBinaryEl.textContent = formatBinary(textToBinary(cribText));
-                xorOp.style.display = 'none';
-                return;
-            }
-
-            const cribBin = textToBinary(cribText);
-            cribBinaryEl.textContent = formatBinary(cribBin);
-
-            updateSliderMax();
-
-            const startBit = currentPosition * 5;
-            const streamSegment = xorStream.substr(startBit, cribBin.length);
-            if (streamSegment.length < cribBin.length) {
-                xorOp.style.display = 'none';
-                setStatus('Crib extends beyond XOR stream', false);
-                return;
-            }
-
-            const resultBin = xorBinary(streamSegment, cribBin);
-            const resultText = binaryToText(resultBin);
-
-            document.getElementById('opXorStream').textContent = formatBinary(streamSegment);
-            document.getElementById('opXorText').textContent = binaryToText(streamSegment);
-            document.getElementById('opCribBin').textContent = formatBinary(cribBin);
-            document.getElementById('opCribText').textContent = cribText;
-            document.getElementById('opResultBin').textContent = formatBinary(resultBin);
-            const resultEl = document.getElementById('opResultText');
-            resultEl.textContent = resultText;
-            const looksEnglish = /^[A-Z\s]+$/.test(resultText) || isReadable(resultText);
-            resultEl.style.color = looksEnglish ? '#00ff41' : '#888';
-
-            xorOp.style.display = 'block';
-            setStatus(`Position ${currentPosition} → ${resultText}`, true);
-        }
-
+        
         function updateCribBinary() {
             const crib = document.getElementById('crib').value.trim().toUpperCase();
             const cribBinaryEl = document.getElementById('cribBinary');
+            const xorOp = document.getElementById('xorOperation');
+
             if (!crib) {
                 cribBinaryEl.textContent = '';
-                document.getElementById('xorOperation').style.display = 'none';
+                xorOp.style.display = 'none';
+                document.getElementById('autoSolver').style.display = 'none';
                 return;
             }
-            cribBinaryEl.textContent = formatBinary(textToBinary(crib));
-            updateSliderMax();
-            if (!xorStream) return;
-            updateCribVisuals();
-        }
 
+            const cribBin = textToBinary(crib);
+            cribBinaryEl.textContent = formatBinary(cribBin);
+
+            // Run the auto-solver whenever crib changes
+            try { findBestPositions(); } catch (e) { /* ignore */ }
+
+            // Use current slider position instead of 0
+            const currentPos = parseInt(document.getElementById('dragSlider').value) || 0;
+            const bitOffset = currentPos * 5;
+
+            // Show XOR operation if we have the stream and it fits
+            if (xorStream && (bitOffset + cribBin.length) <= xorStream.length) {
+                const portion = xorStream.substr(bitOffset, cribBin.length);
+                const resultBin = xorBinary(portion, cribBin);
+                const resultText = binaryToText(resultBin);
+
+                document.getElementById('opXorStream').textContent = formatBinary(portion);
+                document.getElementById('opXorText').textContent = binaryToText(portion);
+                document.getElementById('opCribBin').textContent = formatBinary(cribBin);
+                document.getElementById('opCribText').textContent = crib;
+                document.getElementById('opResultBin').textContent = formatBinary(resultBin);
+                document.getElementById('opResultText').textContent = resultText;
+
+                xorOp.style.display = 'block';
+                setStatus(`Result: ${resultText}`, true);
+            } else {
+                xorOp.style.display = 'none';
+            }
+        }
+        
         function useCrib(crib) {
             document.getElementById('crib').value = crib;
             updateCribBinary();
@@ -705,7 +710,7 @@
         }
         
         // Initialize matrix rain on load
-        window.addEventListener('load', () => createMatrixRain());
+        window.addEventListener('load', createMatrixRain);
     </script>
 </body>
 </html>
