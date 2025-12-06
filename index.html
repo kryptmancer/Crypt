@@ -297,187 +297,6 @@
             font-size: 1.3em;
         }
         
-        /* Position Slider */
-        .position-control {
-            margin: 20px 0;
-            padding: 15px;
-            background: #0a0a0a;
-            border: 1px solid #252525;
-        }
-        
-        .position-control label {
-            display: block;
-            color: #707070;
-            font-size: 0.8em;
-            margin-bottom: 10px;
-        }
-        
-        .slider-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .position-slider {
-            flex: 1;
-            -webkit-appearance: none;
-            height: 4px;
-            background: #252525;
-            outline: none;
-            border-radius: 2px;
-        }
-        
-        .position-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #00ff41;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .position-slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            background: #00ff41;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .position-value {
-            color: #00ff41;
-            font-size: 1.2em;
-            min-width: 50px;
-            text-align: center;
-        }
-        
-        /* Results Table */
-        .results-section {
-            margin-top: 25px;
-        }
-        
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .results-header label {
-            color: #c0c0c0;
-            font-size: 0.85em;
-        }
-        
-        .filter-toggle {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .filter-btn {
-            background: transparent;
-            border: 1px solid #303030;
-            color: #606060;
-            padding: 5px 12px;
-            font-size: 0.7em;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .filter-btn.active {
-            border-color: #00ff41;
-            color: #00ff41;
-        }
-        
-        .results-table {
-            background: #0a0a0a;
-            border: 1px solid #252525;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .result-row {
-            display: grid;
-            grid-template-columns: 50px 1fr 1fr 80px;
-            padding: 10px 15px;
-            border-bottom: 1px solid #151515;
-            font-size: 0.85em;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .result-row:hover {
-            background: #151515;
-        }
-        
-        .result-row.selected {
-            background: rgba(0, 255, 65, 0.1);
-            border-left: 2px solid #00ff41;
-        }
-        
-        .result-row.readable {
-            background: rgba(0, 255, 65, 0.05);
-        }
-        
-        .result-row .pos {
-            color: #505050;
-        }
-        
-        .result-row .p2-result {
-            color: #ffffff;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .result-row .p1-result {
-            color: #707070;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .result-row .score {
-            color: #505050;
-            text-align: right;
-        }
-        
-        .result-row.readable .score {
-            color: #00ff41;
-        }
-
-        /* Decrypted view */
-        .decrypted-view {
-            margin-top: 18px;
-            padding: 18px;
-            background: #0a0a0a;
-            border: 1px solid #252525;
-            font-family: 'Courier New', monospace;
-            color: #c0c0c0;
-            line-height: 1.8;
-            min-height: 46px;
-        }
-
-        .decrypted-line {
-            white-space: pre-wrap;
-            word-break: keep-all;
-        }
-
-        .highlight-match {
-            background: rgba(0,255,65,0.12);
-            color: #ffffff;
-            padding: 0 2px;
-            border-radius: 2px;
-        }
-        
-        .result-row-header {
-            display: grid;
-            grid-template-columns: 50px 1fr 1fr 80px;
-            padding: 8px 15px;
-            background: #0f0f0f;
-            border-bottom: 1px solid #252525;
-            font-size: 0.7em;
-            color: #505050;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        
         .cribs-bar {
             margin: 20px 0;
         }
@@ -504,80 +323,6 @@
         
         .status-line.error {
             color: #ff4444;
-        }
-        
-        /* Info Panel */
-        .info-panel {
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            padding: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .info-panel h3 {
-            color: #00ff41;
-            font-size: 0.85em;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            font-weight: normal;
-        }
-        
-        .info-panel p {
-            font-size: 0.9em;
-            line-height: 1.7;
-            margin-bottom: 12px;
-        }
-        
-        .info-panel .highlight {
-            color: #00ff41;
-        }
-        
-        .info-panel .warning {
-            color: #ff4444;
-        }
-        
-        .key-insight {
-            background: #0a0a0a;
-            border-left: 2px solid #00ff41;
-            padding: 15px 20px;
-            margin: 15px 0;
-            font-size: 0.9em;
-        }
-        
-        .key-insight strong {
-            color: #ffffff;
-        }
-        
-        .step-indicator {
-            display: inline-block;
-            background: #00ff41;
-            color: #0a0a0a;
-            width: 22px;
-            height: 22px;
-            line-height: 22px;
-            text-align: center;
-            font-size: 0.75em;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .footer-note {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #1a1a1a;
-            font-size: 0.75em;
-            color: #505050;
-            text-align: center;
-        }
-        
-        .footer-note a {
-            color: #707070;
-            text-decoration: none;
-        }
-        
-        .footer-note a:hover {
-            color: #00ff41;
         }
         
         ::selection {
@@ -613,69 +358,51 @@
             <p class="tagline">Two-Time Pad Cryptanalysis</p>
         </header>
         
-        <div class="info-panel">
-            <h3>The Vulnerability</h3>
-            <p>A <span class="highlight">one-time pad</span> is unbreakable — but only if the key is <strong>never reused</strong>. When the same key encrypts two messages, the XOR of the ciphertexts <span class="warning">cancels out the key entirely</span>:</p>
+        <div class="section">
+            <h2>The Mathematics</h2>
+            <p>When two messages are encrypted with the same key:</p>
             <div class="formula">C₁ ⊕ C₂ = (P₁ ⊕ K) ⊕ (P₂ ⊕ K) = P₁ ⊕ P₂</div>
-            <div class="key-insight">
-                <strong>Key Insight:</strong> The result is the XOR of the two plaintexts. If you know (or guess) one message, you can recover the other.
-            </div>
-            <p style="font-size: 0.85em; color: #707070;">This technique broke Soviet intelligence communications in the <span class="highlight">Venona Project</span> (1943-1980) when pad pages were accidentally reused.</p>
+            <p style="margin-top: 15px;">XOR the known plaintext with the stream to reveal the other message.</p>
         </div>
         
         <div class="tool-container">
-            <h2>Crib-Dragging Attack</h2>
+            <h2>Cryptanalysis Tool</h2>
             
-            <div class="input-group">
-                <label><span class="step-indicator">1</span>Intercepted Ciphertexts (5-bit Baudot binary)</label>
-            </div>
             <div class="input-row">
                 <div class="input-group">
-                    <label style="font-size: 0.7em; color: #505050;">C₁ = P₁ ⊕ K</label>
-                    <textarea id="c1" placeholder="00000 11111 11001 11000 10111 00011"></textarea>
+                    <label>Ciphertext 1 (binary)</label>
+                    <textarea id="c1" placeholder="e.g., 00000 11111 11001 11000 10111 00011"></textarea>
                 </div>
                 <div class="input-group">
-                    <label style="font-size: 0.7em; color: #505050;">C₂ = P₂ ⊕ K</label>
-                    <textarea id="c2" placeholder="00000 01011 00100 01001 11111 00011"></textarea>
+                    <label>Ciphertext 2 (binary)</label>
+                    <textarea id="c2" placeholder="e.g., 00000 01011 00100 01001 11111 00011"></textarea>
                 </div>
             </div>
             
-            <button class="btn" onclick="computeXOR()">XOR Ciphertexts → Remove Key</button>
+            <button class="btn" onclick="computeXOR()">Compute XOR</button>
             
             <div class="input-group" style="margin-top: 25px;">
-                <label><span class="step-indicator">2</span>Key Eliminated: P₁ ⊕ P₂</label>
+                <label>XOR Stream (P₁ ⊕ P₂)</label>
                 <div class="xor-display empty" id="xorDisplay">Waiting for input...</div>
             </div>
             
             <div class="input-group">
-                <label><span class="step-indicator">3</span>Enter Known Plaintext (Crib)</label>
-                <input type="text" id="crib" placeholder="Guess a word from one message..." oninput="updateCribBinary()">
+                <label>Known Plaintext (Crib)</label>
+                <input type="text" id="crib" placeholder="e.g., CIPHER, CAESAR, ATTACK..." oninput="updateCribBinary()">
                 <div class="crib-binary" id="cribBinary"></div>
             </div>
             
             <div class="cribs-bar">
-                <span>Common cribs:</span>
-                <button class="btn btn-small" onclick="useCrib('THE ')">THE_</button>
-                <button class="btn btn-small" onclick="useCrib(' AND ')">_AND_</button>
-                <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
-                <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
+                <span>Quick:</span>
                 <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
                 <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
-            </div>
-            
-            <!-- Position Slider -->
-            <div class="position-control" id="positionControl" style="display: none;">
-                <label>Drag Position (slide crib across the XOR stream)</label>
-                <div class="slider-row">
-                    <span class="position-value" id="posValue">0</span>
-                    <input type="range" class="position-slider" id="posSlider" min="0" max="0" value="0" oninput="updatePosition()">
-                    <span style="color: #505050; font-size: 0.8em;">max: <span id="maxPos">0</span></span>
-                </div>
+                <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
+                <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
+                <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
             </div>
             
             <!-- XOR Operation Display -->
             <div class="xor-operation" id="xorOperation" style="display: none;">
-                <label style="display: block; margin-bottom: 15px;"><span class="step-indicator">4</span>XOR at Position <span id="currentPosLabel">0</span></label>
                 <div class="op-row">
                     <span class="op-label">P₁ ⊕ P₂</span>
                     <span class="op-binary" id="opXorStream"></span>
@@ -694,55 +421,7 @@
                 </div>
             </div>
             
-            <!-- Decrypted plaintext view (contextual) -->
-            <div class="decrypted-view" id="decryptedView" style="display: none;">
-                <div style="font-size:0.8em;color:#707070;margin-bottom:8px;">Decrypted context (inferred from crib at selected position)</div>
-                <div class="decrypted-line" id="decryptedLine"></div>
-            </div>
-            
-            <!-- Persistent recovered buffers -->
-            <div class="decrypted-view" id="recoveredView" style="display: none;">
-                <div style="font-size:0.8em;color:#707070;margin-bottom:8px;">Recovered plaintext buffers (accumulated from accepted matches)</div>
-                <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
-                    <div style="flex:1">
-                        <div style="font-size:0.75em;color:#707070;margin-bottom:6px;">P₁ (accepted)</div>
-                        <div class="decrypted-line" id="recoveredP1"></div>
-                    </div>
-                    <div style="flex:1">
-                        <div style="font-size:0.75em;color:#707070;margin-bottom:6px;">P₂ (accepted)</div>
-                        <div class="decrypted-line" id="recoveredP2"></div>
-                    </div>
-                </div>
-                <div style="display:flex;gap:12px;align-items:center;">
-                    <button class="btn btn-small" onclick="applyRecovery('p2')">Accept current → P₂</button>
-                    <button class="btn btn-small" onclick="applyRecovery('p1')">Accept current → P₁</button>
-                    <button class="btn btn-small" onclick="clearRecovered()" style="border-color:#252525;">Clear Recovered</button>
-                </div>
-            </div>
-            
-            <!-- All Positions Results -->
-            <div class="results-section" id="resultsSection" style="display: none;">
-                <div class="results-header">
-                    <label><span class="step-indicator">5</span>All Positions (click to select)</label>
-                    <div class="filter-toggle">
-                        <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
-                        <button class="filter-btn" id="filterReadable" onclick="setFilter('readable')">Readable Only</button>
-                    </div>
-                </div>
-                <div class="result-row-header">
-                    <span>Pos</span>
-                    <span>If crib = P₁ → P₂</span>
-                    <span>If crib = P₂ → P₁</span>
-                    <span>Score</span>
-                </div>
-                <div class="results-table" id="resultsTable"></div>
-            </div>
-            
             <div class="status-line" id="status">Ready</div>
-        </div>
-        
-        <div class="footer-note">
-            Historical: The <a href="https://en.wikipedia.org/wiki/Venona_project" target="_blank">Venona Project</a> used this exact technique to decrypt 3,000+ Soviet intelligence messages (1943–1980)
         </div>
     </div>
     
@@ -763,14 +442,8 @@
         );
         
         let xorStream = '';
-        let bin1_global = '';
-        let bin2_global = '';
-        let currentPosition = 0;
-        let allResults = [];
-        let filterMode = 'all';
-        let recoveredP1 = [];
-        let recoveredP2 = [];
         
+        // Clean binary input: remove spaces and validate
         function cleanBinary(input) {
             const cleaned = input.replace(/\s/g, '');
             if (!/^[01]+$/.test(cleaned)) {
@@ -818,25 +491,11 @@
             return formatted;
         }
         
-        // Improved readability scoring
-        function scoreReadability(text) {
-            if (text.length < 2) return 0;
-            const letters = (text.match(/[A-Z]/g) || []).length;
-            const spaces = (text.match(/ /g) || []).length;
-            const common = (text.match(/[ETAOINSHRDLU ]/gi) || []).length;
-            const special = (text.match(/[\/?34589]/g) || []).length;
-            
-            let score = 0;
-            score += (letters / text.length) * 40;  // Letter ratio
-            score += (common / text.length) * 30;   // Common letter ratio
-            score += (spaces / text.length) * 20;   // Space ratio (natural text has spaces)
-            score -= (special / text.length) * 20;  // Penalize special chars
-            
-            return Math.max(0, Math.min(100, Math.round(score)));
-        }
-        
         function isReadable(text) {
-            return scoreReadability(text) >= 50;
+            if (text.length < 2) return false;
+            const letters = (text.match(/[A-Z]/g) || []).length;
+            const common = (text.match(/[ETAOINSHRDLU]/g) || []).length;
+            return letters / text.length >= 0.7 && (letters === 0 || common / letters >= 0.3);
         }
         
         function computeXOR() {
@@ -857,22 +516,21 @@
                     return;
                 }
                 
+                if (bin1.length % 5 !== 0) {
+                    setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
+                }
+                
                 xorStream = xorBinary(bin1, bin2);
-                bin1_global = bin1;
-                bin2_global = bin2;
-
-                // initialize recovered buffers
-                const totalChars = Math.floor(xorStream.length / 5);
-                recoveredP1 = new Array(totalChars).fill(null);
-                recoveredP2 = new Array(totalChars).fill(null);
                 
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
                 display.innerHTML = `<div class="text-line">${decoded}</div><div class="binary-line">${formatBinary(xorStream)}</div>`;
                 display.classList.remove('empty');
                 
+                // Update XOR operation if crib exists
                 updateCribBinary();
-                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters. Enter a crib to begin dragging.`, true);
+                
+                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
             } catch (e) {
                 setStatus(e.message, false);
             }
@@ -881,247 +539,40 @@
         function updateCribBinary() {
             const crib = document.getElementById('crib').value.trim().toUpperCase();
             const cribBinaryEl = document.getElementById('cribBinary');
-            const posControl = document.getElementById('positionControl');
             const xorOp = document.getElementById('xorOperation');
-            const resultsSection = document.getElementById('resultsSection');
             
             if (!crib) {
                 cribBinaryEl.textContent = '';
-                posControl.style.display = 'none';
                 xorOp.style.display = 'none';
-                resultsSection.style.display = 'none';
                 return;
             }
             
             const cribBin = textToBinary(crib);
             cribBinaryEl.textContent = formatBinary(cribBin);
             
+            // Show XOR operation if we have the stream
             if (xorStream && cribBin.length <= xorStream.length) {
-                const maxPos = Math.floor((xorStream.length - cribBin.length) / 5);
-                
-                // Setup slider
-                const slider = document.getElementById('posSlider');
-                slider.max = maxPos;
-                document.getElementById('maxPos').textContent = maxPos;
-                posControl.style.display = 'block';
-                
-                // Compute all results
-                computeAllPositions(cribBin);
-                
-                // Update display for current position
-                updatePosition();
-                
-                resultsSection.style.display = 'block';
-                renderResults();
-            } else {
-                posControl.style.display = 'none';
-                xorOp.style.display = 'none';
-                resultsSection.style.display = 'none';
-            }
-        }
-        
-        function computeAllPositions(cribBin) {
-            allResults = [];
-            const maxPos = Math.floor((xorStream.length - cribBin.length) / 5) + 1;
-            
-            for (let pos = 0; pos < maxPos; pos++) {
-                const bitPos = pos * 5;
-                const portion = xorStream.substr(bitPos, cribBin.length);
+                const portion = xorStream.substr(0, cribBin.length);
                 const resultBin = xorBinary(portion, cribBin);
-                const p2Result = binaryToText(resultBin);  // If crib is P1
-                const p1Result = binaryToText(resultBin);  // If crib is P2 (same XOR, symmetric)
+                const resultText = binaryToText(resultBin);
                 
-                const score = Math.max(scoreReadability(p2Result), scoreReadability(p1Result));
-                
-                allResults.push({
-                    pos,
-                    portion,
-                    resultBin,
-                    p2Result,
-                    p1Result,
-                    score,
-                    readable: score >= 50
-                });
-            }
-            
-            // Sort by score for quick identification
-            const readableCount = allResults.filter(r => r.readable).length;
-            setStatus(`Found ${readableCount} potentially readable results out of ${allResults.length} positions`, readableCount > 0);
-        }
-        
-        function updatePosition() {
-            const pos = parseInt(document.getElementById('posSlider').value);
-            currentPosition = pos;
-            document.getElementById('posValue').textContent = pos;
-            document.getElementById('currentPosLabel').textContent = pos;
-            
-            const crib = document.getElementById('crib').value.trim().toUpperCase();
-            const cribBin = textToBinary(crib);
-            
-            if (allResults[pos]) {
-                const r = allResults[pos];
-
-                document.getElementById('opXorStream').textContent = formatBinary(r.portion);
-                document.getElementById('opXorText').textContent = binaryToText(r.portion);
+                document.getElementById('opXorStream').textContent = formatBinary(portion);
+                document.getElementById('opXorText').textContent = binaryToText(portion);
                 document.getElementById('opCribBin').textContent = formatBinary(cribBin);
                 document.getElementById('opCribText').textContent = crib;
-                document.getElementById('opResultBin').textContent = formatBinary(r.resultBin);
-                document.getElementById('opResultText').textContent = r.p2Result;
-
-                document.getElementById('xorOperation').style.display = 'block';
-
-                // Highlight selected row in results
-                document.querySelectorAll('.result-row').forEach((row, i) => {
-                    row.classList.toggle('selected', parseInt(row.dataset.pos) === pos);
-                });
-
-                // Render decrypted view (show contextual P2 with highlighted match)
-                renderDecryptedView(pos, cribBin.length / 5);
+                document.getElementById('opResultBin').textContent = formatBinary(resultBin);
+                document.getElementById('opResultText').textContent = resultText;
+                
+                xorOp.style.display = 'block';
+                setStatus(`Result: ${resultText}`, true);
+            } else {
+                xorOp.style.display = 'none';
             }
-        }
-
-        // Render a contextual decrypted view for P2 using the inferred segment
-        function renderDecryptedView(posChars, cribChars) {
-            // total characters in stream
-            const totalChars = Math.floor(xorStream.length / 5);
-            const viewEl = document.getElementById('decryptedView');
-            const lineEl = document.getElementById('decryptedLine');
-
-            if (!bin2_global) {
-                viewEl.style.display = 'none';
-                return;
-            }
-
-            // copy placeholder array
-            const chars = new Array(totalChars).fill('·');
-
-            // compute bit positions
-            const startBit = posChars * 5;
-            const cribBitLen = cribChars * 5;
-
-            // get crib binary and result
-            const crib = document.getElementById('crib').value.trim().toUpperCase();
-            const cribBin = textToBinary(crib);
-
-            const portion = xorStream.substr(startBit, cribBin.length);
-            const resultBin = xorBinary(portion, cribBin);
-            const resultText = binaryToText(resultBin);
-
-            // fill the resultText into chars array at positions
-            for (let i = 0; i < resultText.length; i++) {
-                chars[posChars + i] = resultText[i] || '?';
-            }
-
-            // build HTML with highlighted span for matched region
-            let html = '';
-            for (let i = 0; i < chars.length; i++) {
-                if (i >= posChars && i < posChars + resultText.length) {
-                    html += `<span class="highlight-match">${chars[i]}</span>`;
-                } else {
-                    html += chars[i];
-                }
-                // add a small spacer for readability
-                if ((i + 1) % 10 === 0) html += ' ';
-            }
-
-            lineEl.innerHTML = html;
-            viewEl.style.display = 'block';
-        }
-        
-        function renderResults() {
-            const table = document.getElementById('resultsTable');
-            table.innerHTML = '';
-            
-            const filtered = filterMode === 'readable' 
-                ? allResults.filter(r => r.readable)
-                : allResults;
-            
-            filtered.forEach(r => {
-                const row = document.createElement('div');
-                row.className = 'result-row' + (r.readable ? ' readable' : '') + (r.pos === currentPosition ? ' selected' : '');
-                row.dataset.pos = r.pos;
-                row.onclick = () => selectPosition(r.pos);
-                row.innerHTML = `
-                    <span class="pos">${r.pos.toString().padStart(2, '0')}</span>
-                    <span class="p2-result">${r.p2Result}</span>
-                    <span class="p1-result">${r.p1Result}</span>
-                    <span class="score">${r.score}%</span>
-                `;
-                table.appendChild(row);
-            });
-            // show recovered view if there is any data
-            const hasRecovered = (recoveredP1 && recoveredP1.some(Boolean)) || (recoveredP2 && recoveredP2.some(Boolean));
-            document.getElementById('recoveredView').style.display = hasRecovered ? 'block' : 'none';
-        }
-        
-        function selectPosition(pos) {
-            document.getElementById('posSlider').value = pos;
-            updatePosition();
-        }
-        
-        function setFilter(mode) {
-            filterMode = mode;
-            document.getElementById('filterAll').classList.toggle('active', mode === 'all');
-            document.getElementById('filterReadable').classList.toggle('active', mode === 'readable');
-            renderResults();
         }
         
         function useCrib(crib) {
             document.getElementById('crib').value = crib;
             updateCribBinary();
-        }
-
-        // Accept current result at selected position into recovered buffers
-        function applyRecovery(target) {
-            // target = 'p1' or 'p2'
-            if (!allResults[currentPosition]) return;
-            const r = allResults[currentPosition];
-            const resultText = r.p2Result || '';
-            const len = resultText.length;
-
-            if (target === 'p2') {
-                for (let i = 0; i < len; i++) {
-                    recoveredP2[currentPosition + i] = resultText[i] || recoveredP2[currentPosition + i];
-                }
-            } else {
-                for (let i = 0; i < len; i++) {
-                    recoveredP1[currentPosition + i] = resultText[i] || recoveredP1[currentPosition + i];
-                }
-            }
-            renderRecoveredBuffers();
-            setStatus(`Accepted ${len} chars into ${target.toUpperCase()}`, true);
-        }
-
-        function renderRecoveredBuffers() {
-            const total = Math.floor(xorStream.length / 5) || 0;
-            const p1el = document.getElementById('recoveredP1');
-            const p2el = document.getElementById('recoveredP2');
-            if (total === 0) {
-                p1el.textContent = '';
-                p2el.textContent = '';
-                document.getElementById('recoveredView').style.display = 'none';
-                return;
-            }
-
-            let html1 = '';
-            let html2 = '';
-            for (let i = 0; i < total; i++) {
-                const c1 = recoveredP1[i] || '·';
-                const c2 = recoveredP2[i] || '·';
-                html1 += (recoveredP1[i]) ? `<span class="highlight-match">${c1}</span>` : c1;
-                html2 += (recoveredP2[i]) ? `<span class="highlight-match">${c2}</span>` : c2;
-                if ((i + 1) % 10 === 0) { html1 += ' '; html2 += ' '; }
-            }
-            p1el.innerHTML = html1;
-            p2el.innerHTML = html2;
-            document.getElementById('recoveredView').style.display = 'block';
-        }
-
-        function clearRecovered() {
-            recoveredP1 = recoveredP1.map(() => null);
-            recoveredP2 = recoveredP2.map(() => null);
-            renderRecoveredBuffers();
-            setStatus('Recovered buffers cleared', false);
         }
         
         function setStatus(msg, success) {
@@ -1142,6 +593,7 @@
                 column.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 column.style.animationDelay = (Math.random() * 10) + 's';
                 
+                // Generate random binary string
                 let binary = '';
                 const length = Math.floor(Math.random() * 20) + 10;
                 for (let j = 0; j < length; j++) {
@@ -1153,6 +605,7 @@
             }
         }
         
+        // Initialize matrix rain on load
         window.addEventListener('load', createMatrixRain);
     </script>
 </body>
