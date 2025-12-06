@@ -297,6 +297,163 @@
             font-size: 1.3em;
         }
         
+        /* Position Slider */
+        .position-control {
+            margin: 20px 0;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 1px solid #252525;
+        }
+        
+        .position-control label {
+            display: block;
+            color: #707070;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .position-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 4px;
+            background: #252525;
+            outline: none;
+            border-radius: 2px;
+        }
+        
+        .position-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #00ff41;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .position-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #00ff41;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .position-value {
+            color: #00ff41;
+            font-size: 1.2em;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        /* Results Table */
+        .results-section {
+            margin-top: 25px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .results-header label {
+            color: #c0c0c0;
+            font-size: 0.85em;
+        }
+        
+        .filter-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #303030;
+            color: #606060;
+            padding: 5px 12px;
+            font-size: 0.7em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn.active {
+            border-color: #00ff41;
+            color: #00ff41;
+        }
+        
+        .results-table {
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .result-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 1fr 80px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #151515;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .result-row:hover {
+            background: #151515;
+        }
+        
+        .result-row.selected {
+            background: rgba(0, 255, 65, 0.1);
+            border-left: 2px solid #00ff41;
+        }
+        
+        .result-row.readable {
+            background: rgba(0, 255, 65, 0.05);
+        }
+        
+        .result-row .pos {
+            color: #505050;
+        }
+        
+        .result-row .p2-result {
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .result-row .p1-result {
+            color: #707070;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .result-row .score {
+            color: #505050;
+            text-align: right;
+        }
+        
+        .result-row.readable .score {
+            color: #00ff41;
+        }
+        
+        .result-row-header {
+            display: grid;
+            grid-template-columns: 50px 1fr 1fr 80px;
+            padding: 8px 15px;
+            background: #0f0f0f;
+            border-bottom: 1px solid #252525;
+            font-size: 0.7em;
+            color: #505050;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
         .cribs-bar {
             margin: 20px 0;
         }
@@ -473,24 +630,35 @@
             </div>
             
             <div class="cribs-bar">
-                <span>Try:</span>
-                <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
-                <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
+                <span>Common cribs:</span>
                 <button class="btn btn-small" onclick="useCrib('THE ')">THE_</button>
+                <button class="btn btn-small" onclick="useCrib(' AND ')">_AND_</button>
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
+                <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
+                <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
+            </div>
+            
+            <!-- Position Slider -->
+            <div class="position-control" id="positionControl" style="display: none;">
+                <label>Drag Position (slide crib across the XOR stream)</label>
+                <div class="slider-row">
+                    <span class="position-value" id="posValue">0</span>
+                    <input type="range" class="position-slider" id="posSlider" min="0" max="0" value="0" oninput="updatePosition()">
+                    <span style="color: #505050; font-size: 0.8em;">max: <span id="maxPos">0</span></span>
+                </div>
             </div>
             
             <!-- XOR Operation Display -->
             <div class="xor-operation" id="xorOperation" style="display: none;">
-                <label style="display: block; margin-bottom: 15px;"><span class="step-indicator">4</span>Recovering the Other Plaintext</label>
+                <label style="display: block; margin-bottom: 15px;"><span class="step-indicator">4</span>XOR at Position <span id="currentPosLabel">0</span></label>
                 <div class="op-row">
                     <span class="op-label">P₁ ⊕ P₂</span>
                     <span class="op-binary" id="opXorStream"></span>
                     <span class="op-text" id="opXorText"></span>
                 </div>
                 <div class="op-row">
-                    <span class="op-label">⊕ P₁ (crib)</span>
+                    <span class="op-label">⊕ Crib</span>
                     <span class="op-binary" id="opCribBin"></span>
                     <span class="op-text" id="opCribText"></span>
                 </div>
@@ -500,6 +668,24 @@
                     <span class="op-binary" id="opResultBin"></span>
                     <span class="op-text" id="opResultText"></span>
                 </div>
+            </div>
+            
+            <!-- All Positions Results -->
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <label><span class="step-indicator">5</span>All Positions (click to select)</label>
+                    <div class="filter-toggle">
+                        <button class="filter-btn active" id="filterAll" onclick="setFilter('all')">All</button>
+                        <button class="filter-btn" id="filterReadable" onclick="setFilter('readable')">Readable Only</button>
+                    </div>
+                </div>
+                <div class="result-row-header">
+                    <span>Pos</span>
+                    <span>If crib = P₁ → P₂</span>
+                    <span>If crib = P₂ → P₁</span>
+                    <span>Score</span>
+                </div>
+                <div class="results-table" id="resultsTable"></div>
             </div>
             
             <div class="status-line" id="status">Ready</div>
@@ -527,8 +713,10 @@
         );
         
         let xorStream = '';
+        let currentPosition = 0;
+        let allResults = [];
+        let filterMode = 'all';
         
-        // Clean binary input: remove spaces and validate
         function cleanBinary(input) {
             const cleaned = input.replace(/\s/g, '');
             if (!/^[01]+$/.test(cleaned)) {
@@ -576,11 +764,25 @@
             return formatted;
         }
         
-        function isReadable(text) {
-            if (text.length < 2) return false;
+        // Improved readability scoring
+        function scoreReadability(text) {
+            if (text.length < 2) return 0;
             const letters = (text.match(/[A-Z]/g) || []).length;
-            const common = (text.match(/[ETAOINSHRDLU]/g) || []).length;
-            return letters / text.length >= 0.7 && (letters === 0 || common / letters >= 0.3);
+            const spaces = (text.match(/ /g) || []).length;
+            const common = (text.match(/[ETAOINSHRDLU ]/gi) || []).length;
+            const special = (text.match(/[\/?34589]/g) || []).length;
+            
+            let score = 0;
+            score += (letters / text.length) * 40;  // Letter ratio
+            score += (common / text.length) * 30;   // Common letter ratio
+            score += (spaces / text.length) * 20;   // Space ratio (natural text has spaces)
+            score -= (special / text.length) * 20;  // Penalize special chars
+            
+            return Math.max(0, Math.min(100, Math.round(score)));
+        }
+        
+        function isReadable(text) {
+            return scoreReadability(text) >= 50;
         }
         
         function computeXOR() {
@@ -601,10 +803,6 @@
                     return;
                 }
                 
-                if (bin1.length % 5 !== 0) {
-                    setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
-                }
-                
                 xorStream = xorBinary(bin1, bin2);
                 
                 const decoded = binaryToText(xorStream);
@@ -612,10 +810,8 @@
                 display.innerHTML = `<div class="text-line">${decoded}</div><div class="binary-line">${formatBinary(xorStream)}</div>`;
                 display.classList.remove('empty');
                 
-                // Update XOR operation if crib exists
                 updateCribBinary();
-                
-                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
+                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters. Enter a crib to begin dragging.`, true);
             } catch (e) {
                 setStatus(e.message, false);
             }
@@ -624,35 +820,135 @@
         function updateCribBinary() {
             const crib = document.getElementById('crib').value.trim().toUpperCase();
             const cribBinaryEl = document.getElementById('cribBinary');
+            const posControl = document.getElementById('positionControl');
             const xorOp = document.getElementById('xorOperation');
+            const resultsSection = document.getElementById('resultsSection');
             
             if (!crib) {
                 cribBinaryEl.textContent = '';
+                posControl.style.display = 'none';
                 xorOp.style.display = 'none';
+                resultsSection.style.display = 'none';
                 return;
             }
             
             const cribBin = textToBinary(crib);
             cribBinaryEl.textContent = formatBinary(cribBin);
             
-            // Show XOR operation if we have the stream
             if (xorStream && cribBin.length <= xorStream.length) {
-                const portion = xorStream.substr(0, cribBin.length);
-                const resultBin = xorBinary(portion, cribBin);
-                const resultText = binaryToText(resultBin);
+                const maxPos = Math.floor((xorStream.length - cribBin.length) / 5);
                 
-                document.getElementById('opXorStream').textContent = formatBinary(portion);
-                document.getElementById('opXorText').textContent = binaryToText(portion);
+                // Setup slider
+                const slider = document.getElementById('posSlider');
+                slider.max = maxPos;
+                document.getElementById('maxPos').textContent = maxPos;
+                posControl.style.display = 'block';
+                
+                // Compute all results
+                computeAllPositions(cribBin);
+                
+                // Update display for current position
+                updatePosition();
+                
+                resultsSection.style.display = 'block';
+                renderResults();
+            } else {
+                posControl.style.display = 'none';
+                xorOp.style.display = 'none';
+                resultsSection.style.display = 'none';
+            }
+        }
+        
+        function computeAllPositions(cribBin) {
+            allResults = [];
+            const maxPos = Math.floor((xorStream.length - cribBin.length) / 5) + 1;
+            
+            for (let pos = 0; pos < maxPos; pos++) {
+                const bitPos = pos * 5;
+                const portion = xorStream.substr(bitPos, cribBin.length);
+                const resultBin = xorBinary(portion, cribBin);
+                const p2Result = binaryToText(resultBin);  // If crib is P1
+                const p1Result = binaryToText(resultBin);  // If crib is P2 (same XOR, symmetric)
+                
+                const score = Math.max(scoreReadability(p2Result), scoreReadability(p1Result));
+                
+                allResults.push({
+                    pos,
+                    portion,
+                    resultBin,
+                    p2Result,
+                    p1Result,
+                    score,
+                    readable: score >= 50
+                });
+            }
+            
+            // Sort by score for quick identification
+            const readableCount = allResults.filter(r => r.readable).length;
+            setStatus(`Found ${readableCount} potentially readable results out of ${allResults.length} positions`, readableCount > 0);
+        }
+        
+        function updatePosition() {
+            const pos = parseInt(document.getElementById('posSlider').value);
+            currentPosition = pos;
+            document.getElementById('posValue').textContent = pos;
+            document.getElementById('currentPosLabel').textContent = pos;
+            
+            const crib = document.getElementById('crib').value.trim().toUpperCase();
+            const cribBin = textToBinary(crib);
+            
+            if (allResults[pos]) {
+                const r = allResults[pos];
+                
+                document.getElementById('opXorStream').textContent = formatBinary(r.portion);
+                document.getElementById('opXorText').textContent = binaryToText(r.portion);
                 document.getElementById('opCribBin').textContent = formatBinary(cribBin);
                 document.getElementById('opCribText').textContent = crib;
-                document.getElementById('opResultBin').textContent = formatBinary(resultBin);
-                document.getElementById('opResultText').textContent = resultText;
+                document.getElementById('opResultBin').textContent = formatBinary(r.resultBin);
+                document.getElementById('opResultText').textContent = r.p2Result;
                 
-                xorOp.style.display = 'block';
-                setStatus(`Result: ${resultText}`, true);
-            } else {
-                xorOp.style.display = 'none';
+                document.getElementById('xorOperation').style.display = 'block';
+                
+                // Highlight selected row in results
+                document.querySelectorAll('.result-row').forEach((row, i) => {
+                    row.classList.toggle('selected', parseInt(row.dataset.pos) === pos);
+                });
             }
+        }
+        
+        function renderResults() {
+            const table = document.getElementById('resultsTable');
+            table.innerHTML = '';
+            
+            const filtered = filterMode === 'readable' 
+                ? allResults.filter(r => r.readable)
+                : allResults;
+            
+            filtered.forEach(r => {
+                const row = document.createElement('div');
+                row.className = 'result-row' + (r.readable ? ' readable' : '') + (r.pos === currentPosition ? ' selected' : '');
+                row.dataset.pos = r.pos;
+                row.onclick = () => selectPosition(r.pos);
+                row.innerHTML = `
+                    <span class="pos">${r.pos.toString().padStart(2, '0')}</span>
+                    <span class="p2-result">${r.p2Result}</span>
+                    <span class="p1-result">${r.p1Result}</span>
+                    <span class="score">${r.score}%</span>
+                `;
+                table.appendChild(row);
+            });
+        }
+        
+        function selectPosition(pos) {
+            document.getElementById('posSlider').value = pos;
+            updatePosition();
+        }
+        
+        function setFilter(mode) {
+            filterMode = mode;
+            document.getElementById('filterAll').classList.toggle('active', mode === 'all');
+            document.getElementById('filterReadable').classList.toggle('active', mode === 'readable');
+            renderResults();
         }
         
         function useCrib(crib) {
@@ -678,7 +974,6 @@
                 column.style.animationDuration = (Math.random() * 10 + 10) + 's';
                 column.style.animationDelay = (Math.random() * 10) + 's';
                 
-                // Generate random binary string
                 let binary = '';
                 const length = Math.floor(Math.random() * 20) + 10;
                 for (let j = 0; j < length; j++) {
@@ -690,7 +985,6 @@
             }
         }
         
-        // Initialize matrix rain on load
         window.addEventListener('load', createMatrixRain);
     </script>
 </body>
