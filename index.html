@@ -25,18 +25,31 @@
             position: relative;
         }
         
-        /* Matrix Rain Background (disabled for clarity) */
-        .matrix-bg { display: none; }
+        /* Matrix Rain Background (subtle, low-opacity) */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+            display: block;
+            opacity: 0.06;
+        }
         
         .matrix-column {
             position: absolute;
             top: -100%;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-family: 'Roboto Mono', 'Courier New', monospace;
+            font-size: 12px;
             color: #00ff41;
-            opacity: 0.15;
+            opacity: 0.09;
             animation: matrix-fall linear infinite;
-            text-shadow: 0 0 5px #00ff41;
+            text-shadow: 0 0 4px rgba(0,255,65,0.06);
+            line-height: 1.1;
+            letter-spacing: 0.06em;
         }
         
         @keyframes matrix-fall {
@@ -160,10 +173,15 @@
             gap: 20px;
         }
         
-        @media (max-width: 600px) {
-            .input-row {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 800px) {
+            .input-row { grid-template-columns: 1fr; }
+            .container { padding: 20px; }
+            .header { text-align: left; }
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 16px; }
+            h1 { font-size: 3em; letter-spacing: 0.15em; }
         }
         
         .btn {
@@ -253,27 +271,38 @@
             display: flex;
             align-items: center;
             padding: 8px 0;
+            gap: 12px;
+            flex-wrap: wrap;
         }
         
         .op-label {
             color: #707070;
-            min-width: 80px;
+            min-width: 70px;
+            flex: 0 0 70px;
             font-size: 0.9em;
         }
-        
+
         .op-binary {
             color: #00ff41;
-            flex: 1;
+            flex: 1 1 auto;
             font-size: 1em;
             letter-spacing: 0.05em;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
-        
+
         .op-text {
             color: #ffffff;
-            min-width: 100px;
+            min-width: 80px;
+            flex: 0 0 100px;
             text-align: right;
-            font-size: 1.1em;
+            font-size: 1.05em;
             letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 420px) {
+            .op-label { min-width: 60px; flex: 0 0 60px; }
+            .op-text { min-width: 56px; flex: 0 0 64px; font-size: 0.95em; }
         }
         
         .op-divider {
@@ -675,11 +704,8 @@
             }
         }
         
-        // Initialize matrix rain on load only if background visible
-        window.addEventListener('load', () => {
-            const bg = document.getElementById('matrixBg');
-            if (bg && getComputedStyle(bg).display !== 'none') createMatrixRain();
-        });
+        // Initialize matrix rain on load
+        window.addEventListener('load', () => createMatrixRain());
     </script>
 </body>
 </html>
