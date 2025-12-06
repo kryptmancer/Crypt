@@ -325,6 +325,80 @@
             color: #ff4444;
         }
         
+        /* Info Panel */
+        .info-panel {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .info-panel h3 {
+            color: #00ff41;
+            font-size: 0.85em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+        
+        .info-panel p {
+            font-size: 0.9em;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        
+        .info-panel .highlight {
+            color: #00ff41;
+        }
+        
+        .info-panel .warning {
+            color: #ff4444;
+        }
+        
+        .key-insight {
+            background: #0a0a0a;
+            border-left: 2px solid #00ff41;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        
+        .key-insight strong {
+            color: #ffffff;
+        }
+        
+        .step-indicator {
+            display: inline-block;
+            background: #00ff41;
+            color: #0a0a0a;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a1a;
+            font-size: 0.75em;
+            color: #505050;
+            text-align: center;
+        }
+        
+        .footer-note a {
+            color: #707070;
+            text-decoration: none;
+        }
+        
+        .footer-note a:hover {
+            color: #00ff41;
+        }
+        
         ::selection {
             background: #00ff41;
             color: #000;
@@ -358,58 +432,65 @@
             <p class="tagline">Two-Time Pad Cryptanalysis</p>
         </header>
         
-        <div class="section">
-            <h2>The Mathematics</h2>
-            <p>When two messages are encrypted with the same key:</p>
+        <div class="info-panel">
+            <h3>The Vulnerability</h3>
+            <p>A <span class="highlight">one-time pad</span> is unbreakable — but only if the key is <strong>never reused</strong>. When the same key encrypts two messages, the XOR of the ciphertexts <span class="warning">cancels out the key entirely</span>:</p>
             <div class="formula">C₁ ⊕ C₂ = (P₁ ⊕ K) ⊕ (P₂ ⊕ K) = P₁ ⊕ P₂</div>
-            <p style="margin-top: 15px;">XOR the known plaintext with the stream to reveal the other message.</p>
+            <div class="key-insight">
+                <strong>Key Insight:</strong> The result is the XOR of the two plaintexts. If you know (or guess) one message, you can recover the other.
+            </div>
+            <p style="font-size: 0.85em; color: #707070;">This technique broke Soviet intelligence communications in the <span class="highlight">Venona Project</span> (1943-1980) when pad pages were accidentally reused.</p>
         </div>
         
         <div class="tool-container">
-            <h2>Cryptanalysis Tool</h2>
+            <h2>Crib-Dragging Attack</h2>
             
+            <div class="input-group">
+                <label><span class="step-indicator">1</span>Intercepted Ciphertexts (5-bit Baudot binary)</label>
+            </div>
             <div class="input-row">
                 <div class="input-group">
-                    <label>Ciphertext 1 (binary)</label>
-                    <textarea id="c1" placeholder="e.g., 00000 11111 11001 11000 10111 00011"></textarea>
+                    <label style="font-size: 0.7em; color: #505050;">C₁ = P₁ ⊕ K</label>
+                    <textarea id="c1" placeholder="00000 11111 11001 11000 10111 00011"></textarea>
                 </div>
                 <div class="input-group">
-                    <label>Ciphertext 2 (binary)</label>
-                    <textarea id="c2" placeholder="e.g., 00000 01011 00100 01001 11111 00011"></textarea>
+                    <label style="font-size: 0.7em; color: #505050;">C₂ = P₂ ⊕ K</label>
+                    <textarea id="c2" placeholder="00000 01011 00100 01001 11111 00011"></textarea>
                 </div>
             </div>
             
-            <button class="btn" onclick="computeXOR()">Compute XOR</button>
+            <button class="btn" onclick="computeXOR()">XOR Ciphertexts → Remove Key</button>
             
             <div class="input-group" style="margin-top: 25px;">
-                <label>XOR Stream (P₁ ⊕ P₂)</label>
+                <label><span class="step-indicator">2</span>Key Eliminated: P₁ ⊕ P₂</label>
                 <div class="xor-display empty" id="xorDisplay">Waiting for input...</div>
             </div>
             
             <div class="input-group">
-                <label>Known Plaintext (Crib)</label>
-                <input type="text" id="crib" placeholder="e.g., CIPHER, CAESAR, ATTACK..." oninput="updateCribBinary()">
+                <label><span class="step-indicator">3</span>Enter Known Plaintext (Crib)</label>
+                <input type="text" id="crib" placeholder="Guess a word from one message..." oninput="updateCribBinary()">
                 <div class="crib-binary" id="cribBinary"></div>
             </div>
             
             <div class="cribs-bar">
-                <span>Quick:</span>
+                <span>Try:</span>
                 <button class="btn btn-small" onclick="useCrib('CIPHER')">CIPHER</button>
                 <button class="btn btn-small" onclick="useCrib('CAESAR')">CAESAR</button>
-                <button class="btn btn-small" onclick="useCrib('THE')">THE</button>
+                <button class="btn btn-small" onclick="useCrib('THE ')">THE_</button>
                 <button class="btn btn-small" onclick="useCrib('ATTACK')">ATTACK</button>
                 <button class="btn btn-small" onclick="useCrib('SECRET')">SECRET</button>
             </div>
             
             <!-- XOR Operation Display -->
             <div class="xor-operation" id="xorOperation" style="display: none;">
+                <label style="display: block; margin-bottom: 15px;"><span class="step-indicator">4</span>Recovering the Other Plaintext</label>
                 <div class="op-row">
                     <span class="op-label">P₁ ⊕ P₂</span>
                     <span class="op-binary" id="opXorStream"></span>
                     <span class="op-text" id="opXorText"></span>
                 </div>
                 <div class="op-row">
-                    <span class="op-label">⊕ Crib</span>
+                    <span class="op-label">⊕ P₁ (crib)</span>
                     <span class="op-binary" id="opCribBin"></span>
                     <span class="op-text" id="opCribText"></span>
                 </div>
@@ -422,6 +503,10 @@
             </div>
             
             <div class="status-line" id="status">Ready</div>
+        </div>
+        
+        <div class="footer-note">
+            Historical: The <a href="https://en.wikipedia.org/wiki/Venona_project" target="_blank">Venona Project</a> used this exact technique to decrypt 3,000+ Soviet intelligence messages (1943–1980)
         </div>
     </div>
     
