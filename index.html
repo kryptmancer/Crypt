@@ -595,16 +595,24 @@
             }
             
             try {
-                const bin1 = cleanBinary(c1);
-                const bin2 = cleanBinary(c2);
+                let bin1 = cleanBinary(c1);
+                let bin2 = cleanBinary(c2);
                 
+                // [FIX] Handle length mismatch by truncating to the shorter length
                 if (bin1.length !== bin2.length) {
-                    setStatus(`Length mismatch: ${bin1.length} vs ${bin2.length} bits`, false);
-                    return;
+                    const minLen = Math.min(bin1.length, bin2.length);
+                    const diff = Math.abs(bin1.length - bin2.length);
+                    
+                    // Warn the user but proceed
+                    setStatus(`Notice: Lengths differ. Truncating ${diff} bits to match shorted message.`, true);
+                    
+                    // Slice both to the minimum length
+                    bin1 = bin1.slice(0, minLen);
+                    bin2 = bin2.slice(0, minLen);
                 }
                 
                 if (bin1.length % 5 !== 0) {
-                    setStatus(`Warning: ${bin1.length} bits not divisible by 5`, false);
+                    setStatus(`Warning: ${bin1.length} bits not divisible by 5 (partial character)`, false);
                 }
                 
                 xorStream = xorBinary(bin1, bin2);
@@ -614,10 +622,10 @@
                 display.innerHTML = `<div class="text-line">${decoded}</div><div class="binary-line">${formatBinary(xorStream)}</div>`;
                 display.classList.remove('empty');
                 
-                // [NEW] Update slider bounds
+                // Update slider bounds
                 const drag = document.getElementById('dragSlider');
                 if (drag) {
-                    const maxPos = Math.floor(xorStream.length / 5);
+                    const maxPos = Math.floor(xorStream.length / 5) - 1; // -1 ensures we don't go out of bounds
                     drag.max = Math.max(0, maxPos);
                     if (!drag.value) drag.value = 0;
                     document.getElementById('posDisplay').innerText = drag.value;
@@ -626,7 +634,11 @@
                 // Update XOR operation if crib exists
                 updateCribBinary();
                 
-                setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
+                // Only show success status if we didn't already show a truncation warning
+                if (bin1.length === c1.replace(/\s/g,'').length && bin2.length === c2.replace(/\s/g,'').length) {
+                    setStatus(`XOR computed: ${Math.floor(xorStream.length / 5)} characters`, true);
+                }
+                
             } catch (e) {
                 setStatus(e.message, false);
             }
