@@ -441,6 +441,30 @@
         .result-row.readable .score {
             color: #00ff41;
         }
+
+        /* Decrypted view */
+        .decrypted-view {
+            margin-top: 18px;
+            padding: 18px;
+            background: #0a0a0a;
+            border: 1px solid #252525;
+            font-family: 'Courier New', monospace;
+            color: #c0c0c0;
+            line-height: 1.8;
+            min-height: 46px;
+        }
+
+        .decrypted-line {
+            white-space: pre-wrap;
+            word-break: keep-all;
+        }
+
+        .highlight-match {
+            background: rgba(0,255,65,0.12);
+            color: #ffffff;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
         
         .result-row-header {
             display: grid;
@@ -670,6 +694,12 @@
                 </div>
             </div>
             
+            <!-- Decrypted plaintext view (contextual) -->
+            <div class="decrypted-view" id="decryptedView" style="display: none;">
+                <div style="font-size:0.8em;color:#707070;margin-bottom:8px;">Decrypted context (inferred from crib at selected position)</div>
+                <div class="decrypted-line" id="decryptedLine"></div>
+            </div>
+            
             <!-- All Positions Results -->
             <div class="results-section" id="resultsSection" style="display: none;">
                 <div class="results-header">
@@ -713,6 +743,8 @@
         );
         
         let xorStream = '';
+        let bin1_global = '';
+        let bin2_global = '';
         let currentPosition = 0;
         let allResults = [];
         let filterMode = 'all';
@@ -804,6 +836,8 @@
                 }
                 
                 xorStream = xorBinary(bin1, bin2);
+                bin1_global = bin1;
+                bin2_global = bin2;
                 
                 const decoded = binaryToText(xorStream);
                 const display = document.getElementById('xorDisplay');
@@ -899,21 +933,72 @@
             
             if (allResults[pos]) {
                 const r = allResults[pos];
-                
+
                 document.getElementById('opXorStream').textContent = formatBinary(r.portion);
                 document.getElementById('opXorText').textContent = binaryToText(r.portion);
                 document.getElementById('opCribBin').textContent = formatBinary(cribBin);
                 document.getElementById('opCribText').textContent = crib;
                 document.getElementById('opResultBin').textContent = formatBinary(r.resultBin);
                 document.getElementById('opResultText').textContent = r.p2Result;
-                
+
                 document.getElementById('xorOperation').style.display = 'block';
-                
+
                 // Highlight selected row in results
                 document.querySelectorAll('.result-row').forEach((row, i) => {
                     row.classList.toggle('selected', parseInt(row.dataset.pos) === pos);
                 });
+
+                // Render decrypted view (show contextual P2 with highlighted match)
+                renderDecryptedView(pos, cribBin.length / 5);
             }
+        }
+
+        // Render a contextual decrypted view for P2 using the inferred segment
+        function renderDecryptedView(posChars, cribChars) {
+            // total characters in stream
+            const totalChars = Math.floor(xorStream.length / 5);
+            const viewEl = document.getElementById('decryptedView');
+            const lineEl = document.getElementById('decryptedLine');
+
+            if (!bin2_global) {
+                viewEl.style.display = 'none';
+                return;
+            }
+
+            // copy placeholder array
+            const chars = new Array(totalChars).fill('·');
+
+            // compute bit positions
+            const startBit = posChars * 5;
+            const cribBitLen = cribChars * 5;
+
+            // get crib binary and result
+            const crib = document.getElementById('crib').value.trim().toUpperCase();
+            const cribBin = textToBinary(crib);
+
+            const portion = xorStream.substr(startBit, cribBin.length);
+            const resultBin = xorBinary(portion, cribBin);
+            const resultText = binaryToText(resultBin);
+
+            // fill the resultText into chars array at positions
+            for (let i = 0; i < resultText.length; i++) {
+                chars[posChars + i] = resultText[i] || '?';
+            }
+
+            // build HTML with highlighted span for matched region
+            let html = '';
+            for (let i = 0; i < chars.length; i++) {
+                if (i >= posChars && i < posChars + resultText.length) {
+                    html += `<span class="highlight-match">${chars[i]}</span>`;
+                } else {
+                    html += chars[i];
+                }
+                // add a small spacer for readability
+                if ((i + 1) % 10 === 0) html += ' ';
+            }
+
+            lineEl.innerHTML = html;
+            viewEl.style.display = 'block';
         }
         
         function renderResults() {
